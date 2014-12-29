@@ -1,0 +1,69 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%       Preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,oneside]{fithesis2}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{paperbib.bib}
+\usepackage[english]{babel} % package for multilingual support
+\usepackage[cp1250]{inputenc} % Windows OS encoding
+\usepackage[T1]{fontenc}
+\usepackage{quotchap}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{csquotes}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{subfiles}
+\usepackage{imakeidx}
+\usetikzlibrary{backgrounds}
+\usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
+\thesistitle{Developing a multi-tenant, media-marketplace architecture with Windows Azure and ASP.NET} % enter thesis title
+\thesissubtitle{Masters thesis}
+\thesisstudent{Aubrey D. Oosthuizen} % name of the author
+\thesiswoman{false} % defines author’s gender
+\thesisfaculty{fi}
+\thesisyear{Winter 2014}
+\thesisadvisor{Bruno Rossi, Ph.D.} % fill in advisor’s name
+\thesislang{en} % thesis is in English
+\input{custom_commands}
+\makeindex
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%       Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\FrontMatter
+\ThesisTitlePage
+\begin{ThesisDeclaration}
+\DeclarationText
+\AdvisorName
+\end{ThesisDeclaration}
+\begin{ThesisThanks}
+I would like to thank Dr. Bruno Rossi for acting as my thesis adviser and continuously giving valuable feedback and criticism that guided the thesis into a presentable piece of work. Furthermore I would like to thank Mr. D. Harrison for being my mentor during my internship at XV and providing me with copious amounts of guidance. Finally I would like to thank M. Oosthuizen for being a truly supporting partner through even the toughest of times and keeping me working.
+\end{ThesisThanks}
+\begin{ThesisAbstract}
+Abstract comes here (write at end of thesis)
+\end{ThesisAbstract}
+\begin{ThesisKeyWords}
+Multi-tenancy, Cloud Computing, Software as a Service, SaaS, Cloud Native Application, SaaS Maturity, Architecture Description, Microsoft Azure, ASP.NET, MVC, Command Query Responsibility Segregation, Queue Centric Workflow Computing
+\end{ThesisKeyWords}
+\MainMatter
+\tableofcontents % prints table of contents
+\input{sections/chapter_1}
+\input{sections/chapter_2}
+\input{sections/chapter_3}
+\input{sections/chapter_4}
+\input{sections/chapter_5}
+\input{sections/chapter_6}
+\input{sections/chapter_7}
+\input{sections/chapter_8}
+\input{sections/chapter_9}
+\input{sections/chapter_10}
+\printbibliography{}
+\printindex
+\input{sections/appendix_1}
+\input{sections/appendix_2}
+\end{document}
+

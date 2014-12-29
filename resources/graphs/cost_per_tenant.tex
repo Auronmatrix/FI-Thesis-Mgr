@@ -1,0 +1,17 @@
+
+\begin{tikzpicture}
+\begin{axis}[
+    title={Overall costs per tenant},
+    ymajorticks=false,
+    xmajorticks=false,
+    xlabel={Tenants},
+    ylabel={Costs},
+    legend pos=north west,
+    ymajorgrids=false,
+    grid style=dashed,
+]
+ 
+\addplot[color=red]{exp(-x)};
+    
+\end{axis}
+\end{tikzpicture}
