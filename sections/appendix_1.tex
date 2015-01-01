@@ -1,0 +1,42 @@
+\chapter{Tables}
+
+\begin{sidewaystable}[h]
+\centering
+\begin{tabularx}{\textwidth}{X X X X}
+\hline
+\rowcolor[HTML]{C0C0C0} 
+\multicolumn{1}{|X|}{\cellcolor[HTML]{C0C0C0}\textbf{Viewpoint}} & \multicolumn{1}{X|}{\cellcolor[HTML]{C0C0C0}\textbf{Stakeholder}} & \multicolumn{1}{X|}{\cellcolor[HTML]{C0C0C0}\textbf{Description}}                                                                                                              & \multicolumn{1}{X|}{\cellcolor[HTML]{C0C0C0}\textbf{Applicable Model Types (UML)}}                             \\ \hline
+\multicolumn{1}{|X|}{Logical view}                               & \multicolumn{1}{X|}{End-Users}                                    & \multicolumn{1}{X|}{Breakdown of the objects or parts of a system. It describes the functionality to be provided to the end-users}                                             & \multicolumn{1}{X|}{Class Diagrams, State Diagrams, Object Diagrams, Sequence Diagrams,Communication Diagrams} \\ \hline
+\multicolumn{1}{|X|}{Process view}                               & \multicolumn{1}{X|}{Administrators and Managers}                  & \multicolumn{1}{X|}{Provides information on the workflow of objects into processes in order to explain the run-time behaviour of the system and how its processes communicate} & \multicolumn{1}{X|}{Activity Diagram}                                                                          \\ \hline
+\multicolumn{1}{|X|}{Physical view}                              & \multicolumn{1}{X|}{System Engineer, Architect, Developer}        & \multicolumn{1}{X|}{Overview of the physical hardware and software the system is composed of, how they are arranged (topology) and how they communicate.}                      & \multicolumn{1}{X|}{Deployment Diagram}                                                                        \\ \hline
+\multicolumn{1}{|X|}{Development view/ Implementation view}      & \multicolumn{1}{X|}{Developer, software Engineers}                & \multicolumn{1}{X|}{Provides overview of project structure from programming viewpoint including libraries, packages and run-time environments}                                 & \multicolumn{1}{X|}{Component Diagram, Package diagrams}                                                       \\ \hline
+\multicolumn{1}{|X|}{Use case viewpoint/ Scenario viewpoint}     & \multicolumn{1}{X|}{All stakeholders}                             & \multicolumn{1}{X|}{Functional requirements of the system broken down into scenarios that indicate uses of the system by its stakeholders}                                     & \multicolumn{1}{X|}{Use Case Diagrams}                                                                         \\ \hline
+                                                                 &                                                                   &                                                                                                                                                                                &                                                                                                               
+\end{tabularx}
+\caption{4+1 Viewpoint to UML Mapping}
+\label{table:viewpoints}
+\end{sidewaystable}
+
+
+
+\section{ISO Definitions}
+ISO42010 Terms \cite{InternationalOrganizationOfStandardization2011}
+
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|l}
+\cline{1-2}
+\cellcolor[HTML]{C0C0C0}\textbf{Term} & \cellcolor[HTML]{C0C0C0}\textbf{Definition}                                                                                                                                              &  \\ \cline{1-2}
+Architecting                          & Process of conceiving, defining, expressing, documenting, communicating, certifying proper implementation of, maintaining and improving an architecture throughout a system's life-cycle &  \\ \cline{1-2}
+Architecture                          & Fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution                             &  \\ \cline{1-2}
+Architecture Description (AD)         & The work product used to express an architecture                                                                                                                                         &  \\ \cline{1-2}
+Architecture Framework                & Conventions, principles and practices for the description of architectures established within a specific domain of application and/or community of stakeholders                          &  \\ \cline{1-2}
+Architecture View                     & Work product expressing the architecture of a system from the perspective of specific system concerns                                                                                    &  \\ \cline{1-2}
+Architecture Viewpoint                & Work product establishing the conventions for the construction, interpretation and use of architectural views to frame specific system concerns                                          &  \\ \cline{1-2}
+Architectural Concern                 & Interest in a system relevant to one or more of its stakeholders                                                                                                                         &  \\ \cline{1-2}
+Environment                           & context determining the setting and circumstances of all influences upon a system                                                                                                        &  \\ \cline{1-2}
+\end{tabularx}
+\caption{ISO 42010 Definitions}
+\label{table:iso_def}
+\end{table}

@@ -25,3 +25,35 @@
 
 % Index of specific words used. If you find a specific word that you think people will be looking for add
 \index{specific word}
+
+
+“   ” ’
+
+
+% Tables
+% Use the table generator at http://www.tablesgenerator.com/latex_tables#
+
+% To enable the tables to be only the width of text use tabularx instead of tablular. From the generated table, simply replace 
+
+%\begin{table}[h]
+%\centering
+\begin{tabular}{lll}
+
+\end{tabular}
+%\caption{My caption}
+%\label{my-label}
+%\end{table}
+
+with
+
+%\begin{table}[h]
+%\centering
+\begin{tabularx}{\textwidth}{l X l} % Where the letters represent the                                           number of columns
+
+
+\end{tabularx}
+%\caption{My caption}
+%\label{my-label}
+%\end{table}
+
+Note! l = left alight, c = center, r = right align and X = use available space

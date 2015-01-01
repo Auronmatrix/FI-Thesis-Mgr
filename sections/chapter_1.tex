@@ -3,23 +3,59 @@ The advent of cloud computing has changed the way we look at Service Science (SS
  
 This study focuses on first understanding what multi-tenancy is and why it is relevant to the design of cloud based solutions. A case study is used to provide a relevant context to the research from which design considerations are drawn and finally a theoretical architecture implementing multi-tenancy for the specific case requirements is derived.
 
+
 \section{An Analogy for Multi-tenancy}
+
 A common analogy for multi-tenancy can be made by comparing multi-tenant software systems with an apartment block. Software tenants are considered a closed group of customers that are handled together and usually share a common view of the system \cite{Krebs2012} \cite{Wilder}. This means that like in the apartment block, tenants are a grouping of customers (people/families/businesses) using the system (living in an apartment). In such an apartment block, a tenant is an owner of their own respective apartment. Each tenant lives and operates within their apartment independently of other tenants. The tenant could also have other people living or working in his apartment while being completely isolated from the apartment block and other tenants as a whole. Although each tenant lives and acts as if they own the entirety of their apartment block, they are actually sharing resources with all the other tenants including, electricity, heating and property space. In contrast to an apartment block (multi-tenant). Classical software systems represent a house), where only a single-tenant lives and all resources are consumed and used by that tenant. Building a house for each family (grouping of customers or tenant) is extremely expensive and in many cases simply not feasible especially since everyone wants to pay the minimum amount of money for a place to live.
  
+ \section{Problem}
+ 
+Similar to an apartment, customers and businesses want to keep costs for hosting or using software to a minimum. With applications that are designed and modified for a specific client or tenant and then hosted in an individual instance for that tenant, hosting costs increase linearly per tenant. In addition, all changes required by the tenant are implemented for that tenant's application instance, stacking up development and maintenance costs. If the same application needs to be modified for another tenant the application is modified and another instance of the modified application is hosted. This allows for the same application core to be hosted in many instances, each serving a specific tenant. 
 
-\subsection{Subsubsection}
+Although this model allows for some particular benefits, it does not fit in the current "massive scalability" and "service" based cloud paradigm. Provisioning of new tenants is a manual process and scalability is mostly vertical (higher performance of computer hosting the instance) compared to cloud specialized horizontal scaling (more instances sharing application workload). Furthermore, vertical scaling is usually unidirectional, providing no elasticity. 
 
-Hello here is the sub sub section
+Modifications or implementation of new features also need to be implemented for each individual tenant's code base in cases where a separate code base is used. In cases where a single code base is used, switches and checks are overused in order to determine the application behaviour. This dramatically adds to application complexity and reduces maintainability.
 
+\subsection{Background of the Problem}
+The gap between classical hosted and cloud paradigms has given the need for developing multi-tenant solutions. These multi-tenant solutions implement a single application instance in order to serve multiple application tenants while allowing each tenant to extend, configure or modify the application as if they were the sole tenant. Such a multi-tenant system usually comes at a cost of higher design and implementation complexity. However this increased complexity is usually trivial in comparison to the long term benefits such as the application scalability, availability and maintainability. Add to this the financial benefits gained by economies of scales, pay per usage models and the reduced cost of commodity hardware, multi-tenant solutions are a powerful alternative for companies looking to gain differential benefit. This is the reason the study introduces exactly such a company as case study. The utilization of a specific case study with its surrounding contexts allows us to obtain a set of design inputs that will be used for defining the architectural constraints and requirements. 
+
+The most important of these being the limitation for our investigation to using Windows Azure as our cloud application as well as other Microsoft related products and services. Although research and discussions on multi-tenancy are still limited, three major works of literature are used as the foundation for this study. Firstly is Microsoft's guide on building multi-tenant application for the cloud using Windows Azure \cite{Betts2012-ad}. The guide provides a strong theoretical discussions and considerations to take during application design. Although this literature helps one to understand the exact considerations to take when designing the architecture, many of the technologies suggested and used within the guide are now obsolete or have been replaced by better alternatives. This is one of the major influencers for this work.
+
+Specific design patterns for the cloud are also fundamental to the construction of such a multi-tenant architecture and are thoroughly discussed \cite{Wilder2012-so}. Finally, methods for addressing the exact specific challenges as set out by our case study is measured through application of Prescriptive Architecture Guidance for Cloud Applications \cite{Homer2014-oa}.
+
+\section{Statement of the Problem}
+In relation to the discussed problem, this thesis aims to answer three questions relating to multi-tenancy with varying degrees of specificity:
 \begin{itemize}
-\item Here is item 1
-\item Here is item 2
-\item here is item 3
+\item What broad view generic application architecture can be used to implement a multi-tenant application for a variety of cloud platforms?
+\item What are the currently available technologies provided by Windows Azure to create architect and implement a multi-tenant solution?
+\item Which Azure specific multi-tenant architecture can be implemented as prototype artefact to solve the major requirements for our case study?
 \end{itemize}
 
-\begin{enumerate}
-\item number item 2
-\item number item 3
-\item number item 4
-\end{enumerate}
+\section{Thesis Statement}
+This study focuses on multi-tenant application design using Microsoft Azure as cloud platform in order to determine a solid application architecture that would resolve the major requirements of the case study. All this is done in order to better understand the role, design and implementation of multi-tenant applications for the cloud. From this the following thesis statement has been made:
+ 
+\begin{fancyquotes}
+This thesis aims to create a software architecture as artefact that is scalable, customizable and multi-tenant efficient. The artefact should also address the issues and concerns outlined by the case study and be designed around its specific requirements
+\end{fancyquotes}
 
+\section{Purpose and Methodology of the Study}
+
+This study relies on design science as its research as it is primarily a problem solving paradigm \cite{Hevner2004}. It is characterized by the creation of a research artefact in the form of models, methods or instantiations that enable researchers to understand the problems related to the development and implementation of Information Technology (IT) and information systems \cite{March1995a}. These artefacts are created by the extension of existing kernel theories that are then applied, tested and modified through the experience, creativity and intuition of the researcher \cite{Walls1992}. In many cases design science is applied in order to solve identified organizational problems. In such cases, the resulting artefact allows researchers to understand the efficiency and feasibility of the artefact as solution to such a problem \cite{Hevner2004}.
+ 
+In this study we use qualitative means to assess and evaluate means of design, implementation and improvement of the artefact. This evaluation provides feedback and allows one to understand the problem better in order to improve the artefact and its design process continuously. It is common for the design artefact to continuously evolve as research is conducted and new theories or directions are undertaken \cite{Hevner2004}.
+ 
+The artefact which is the primary aim of the research is a design model. Hevner et. al \cite{Hevner2004} defined models as a set of connections between problem and solution components that enable exploration of the effects of design decisions and changes in the real world. Therefore the creation of a "multi-tenant architectural model" can be seen as the principal goal of the research. The secondary supporting artefact which is created as means to show the feasibility, allow assessment of and prove validity of the primary artefact is an instantiation artefact \cite{Hevner2004} in the form of a prototype. The prototype aims to implement the minimal features outlined by the primary artefact in order as merely supporting element. The completeness of effectiveness of the design artefact is evaluated in relation to its completeness in addressing the requirements of the original problem as well as its validity to the use case context \cite{Hevner2004}. It is important to keep in mind that since design science is an iterative approach starting with a simplified conceptual presentation of the problem which is assessed in a changing technological and organizational environment that research assumptions are subject to change \cite{Johansson2000}.
+
+
+\section{Relevance of the Topic and Research}
+
+As most research revolving cloud technologies are still relatively new and continuously changing, it is hard to establish true relevance of a research topic for an extended period. In order to contribute to the pool of knowledge research should provide results that could be perpetually used in order to improve the deep knowledge in current trends at an appropriate speed to their development. Therefore this research claims relevance in the current interest in cloud technologies and their ability to allow multi-tenant systems to be used as "cloud ready" alternative architecture. Thus the artefact produced as research results should address the observational requirements of the case study providing a relevant model considering current technologies which could be used either by organizations wishing to implement a multi-tenant system with a similar context to the case study or other researchers that wish to extend the model for other technologies, use cases or problem domains. Finally, scientific research should be evaluated in light of its actual practical implementations, proving its relevance to the field and as research \cite{Hevner2004}. This paper aims to evaluate its practicality through observation and application to the research case study.
+
+
+\section{Research Objectives}
+
+The research problem is approached by firstly evaluating current and related cloud literature. Context to the research problem is then provided through means of the XV Application (XVA) use case. This use case is used as primary design input from which requirements, constraints and considerations are taken where after an in depth dissection of available technologies provide by Microsoft Azure is done. A broad overview of relevant design patterns is given and taken into account before creation of the initial architectural artefact or model. The model is then used to extract a general model for implementation of an multi-tenant application and the Azure specific model is then used to implement an simplistic prototype which is used as "proof of concept" and validity for the architectural model.
+
+\section{Research Outline}
+
+Chapter 1 introduces the problem domain of this paper and aims to familiarize the reader with the background to the problem and its relevance for investigation. It also clearly explains the intent of the research and outlines any limitations, assumptions and delimitations that are made. The next chapter introduces us to multi-tenancy and its implementation in the cloud. It also examines different levels of Software as a Service (SaaS) maturity in order to provide grounds for the necessity for SaaS providers to consider multi-tenancy as a crucial part of their software design architecture.
