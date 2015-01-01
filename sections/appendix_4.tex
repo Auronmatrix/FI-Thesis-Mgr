@@ -1,1 +1,255 @@
 \chapter{Windows Azure as Reference Technology}
+
+This appendix looks at Windows Azure and its available technologies. It attempts to give a broad overview of Windows Azure in relation to the thesis case study and acts as reference framework for any architectural decisions made.
+
+\subsection{Azure Services}
+
+Windows Azure provides a wide variety of Infrastructure as a Service or IaaS services as well as some comprehensive platform as a service hosting options. The major Azure services that was taken into consideration for this project includes:
+
+Virtual Machines and Hosting:
+\begin{itemize}
+\item Azure Cloud Services (Paas)
+\item Azure Web Sites (Platform as a Service (PaaS))
+\item Azure Virtual Machines (IaaS)
+\end{itemize}
+
+Storage
+\begin{itemize}
+\item Azure SQL
+\item Azure Table Storage
+\item Azure Blob Storage
+\item Azure Search
+\item Azure Document Database
+\end{itemize}
+
+Performance
+\begin{itemize}
+\item Azure Redis Caching
+\end{itemize}
+
+Investigating the specific advantages and disadvantages of each of these technologies is an important part of the architectural design considerations. Since each service introduces different design considerations, requirements or restrictions, research of which services would fit our application requirements is one of the first steps within our design methodology.
+
+\subsection{Feature Comparison}
+
+The following feature list has been taken from\cite{Microsoft_Corporation2014-gg}. Highly relevant features have a checkmark added.
+ 
+Common features:
+\begin{itemize}
+\item Access to services like Service Bus, Storage, SQL Database \checkmark
+\item Host web or web services tier of a multi-tier architecture \checkmark
+\item Host middle tier of a multi-tier architecture \checkmark
+\item Integrated MySQL-as-a-service support
+\item Support for ASP.NET, classic ASP, Node.js, PHP, Python\checkmark
+\item Scale out to multiple instances without redeploy \checkmark
+\item Support for Secure Socket Layer (SSL)
+\item Visual Studio integration \checkmark
+\item Remote Debugging \checkmark
+\item Deploy code with TFS
+\item Network isolation with Azure Virtual Network
+\item Support for Azure Traffic Manager \checkmark
+\item Integrated Endpoint Monitoring
+\end{itemize}
+
+
+Azure Websites features:
+\begin{itemize}
+\item Near-instant deployment \checkmark
+\item Scale up to larger machines without redeploy \checkmark
+\item Web server instances share content and configuration, which means you do not have to redeploy or reconfigure as you scale.
+\end{itemize}
+
+Azure Websites and Cloud Services supported features:
+\begin{itemize}
+\item Multiple deployment environments (production and staging) \checkmark
+\item Automatic Operating System (OS) update management \checkmark
+\item Seamless platform switching (easily move between 32 bit and 64 bit)
+\end{itemize}
+
+Azure Websites and Virtual Machines supported features:
+\begin{itemize}
+\item Deploy code with GIT, FTP \checkmark
+\item Deploy code with Web Deploy \checkmark
+\item WebMatrix support
+\end{itemize}
+ 
+Azure Cloud Services and Virtual Machines supported features
+\begin{itemize}
+\item Remote desktop access to servers
+\item Install any custom MSI
+\item Ability to define/execute start-up tasks
+\item Can use custom Event Tracing for Windows (ETW) for tracing and debugging
+\end{itemize} 
+
+
+\subsection{Azure Websites}
+
+Microsoft recommends Azure Websites for most web applications \cite{Microsoft_Corporation2014-gg}. With Azure Websites, deployment and management is integrated directly into the platform allowing easy scalability for rapidly altering traffic loads. Existing hosted applications can easily be migrated to Azure Websites through the online migration tool.
+ 
+Azure Website WebJobs is also used for adding and managing background jobs for your application. Azure Websites therefore remove the need for administering the virtual machines or operating systems upon which the websites run \cite{Microsoft_Corporation_undated-ej}. This also includes automatic load balancing between multiple instances of the same Azure Website. Instance creation can be either a dynamic process based on prescribed metrics or automatic. Azure Websites offers two basic options, shared or standard. Shared allows your website to share an virtual machine with other shared websites and standard allows you to create your own dedicated virtual machine for hosting your site. With the standard option you can also allows you to scale vertically \cite{Microsoft_Corporation_undated-ej}.
+
+\subsection{Azure Cloud Services}
+
+Azure Cloud Services offer a more complex, yet more modifiable server environment. With Azure Cloud services you are able to access your servers via Remote Desktop. This gives administrators more control over the server allowing you to configure start-up tasks and run as administrator on the Virtual Machine (VM) \cite{Microsoft_Corporation2014-gg}. Unlike Azure Virtual Machines which is an IaaS option, Azure Cloud Services is an all out PaaS or platform as a service solution.
+ 
+With Cloud Services, Azure manages the Virtual Machines themselves, provisioning and updating virtual machines are done automatically. This causes a very specific caveat to using the Cloud Services namely that that should be completely stateless, that is to say they should not persist any state specific information. This should rather be stored in one of the Azure Data Storage options such as Azure SQL, Tables or Blob Storage. Cloud Services are ideal to support large application that requires powerful scalability without the need to control and maintain the underlying infrastructure or operating systems \cite{Microsoft_Corporation_undated-ej}.
+
+\subsection{Azure Virtual Machines}
+
+Azure Virtual Machines are exactly that, true straight forward virtual machines. Unlike Cloud Services or Websites where the deployment and management is mostly integrated into the Azure Platform, Azure Virtual Machines offers you complete control over your hosted virtual machines. This means that configuration, security and maintenance are done by the system administrator instead of the Azure Platform \cite{Microsoft_Corporation2014-gg}. Azure Virtual Machines allow you to create virtual machines on the fly from either a pre-existing Virtual Hard Drive (VHD) or from an array of images in provided in the VHD gallery. It is important to understand that Azure Virtual Machines is an IaaS solution and not only PaaS such as Cloud Services.
+
+\subsection{Which Option to Choose for Our Multi-tier, Multi-tenant Application?}
+
+After careful comparison of the different features available to each hosting option, Azure Cloud Services has been chosen as the most relevant solution. Microsoft recommends starting with Azure Websites and moving to Azure Cloud services once one requires a service that is not fully available in Azure Websites. Although offering less control over the virtual machine than Azure Virtual Machines, Azure Cloud services allows powerful control over Web and Worker roles which Azure Websites currently lack. Although Azure Websites have recently introduced WebJobs to address this requirement, the current XV application uses Azure Cloud services already and relies quite heavily on the worker role to process custom background jobs. Furthermore, extra features currently implemented for example Transport Layer Security (TSL) Hardening require access to the hosted VMs start up tasks and administrative privileges. Since Azure Websites is a shared hosting environment, neither of these would be possible.  According to \cite{Microsoft_Corporation_undated-ej}, Cloud Services is a platform as a service option created to allow highly scalable, fault resistant applications while allowing for more flexibility and control than Azure Websites.
+ 
+A common way for service providers to distinguish between instances is based on clients, for example premium and standard users will use different instances of the same multi-tenant application \cite{Betts2012-ad}. Although this model could be useful to ensure maximum performance for paying customers, XV does not distinguish between users in a way that would allow this model to be applied. Instead, each instance of the multi-tenant application should handle its fair share of tenants, with the load balancer equally balancing between instances.
+
+\subsection{Azure VM Roles}
+
+Azure Cloud Services utilizes two different VM role instance types, Web Roles and Worker Roles. Web Roles are essentially instances of virtual machines running Windows Server 2012 with IIS whereas Worker Roles are instances of virtual machines running Windows Server 2012 without IIS. The general usage of each role differs slightly in that Web Roles are usually used to host front-end Web or Application Programming Interface (API) projects that accepts request from users and Worker Roles to have applications or scripts that execute background jobs or process message queues, essentially anything that the web server should not be responsible for. According to \cite{Microsoft_Corporation_undated-ej}, it is quite common for applications to utilize both a web and a worker role. It is important to note that Azure Cloud Services is a PaaS option. Therefore the setup and maintenance of role instances are administered and maintained by Azure. This means that provisioning of new Web or Worker role instances can be done on the fly, allowing vertical scaling in cases where applications have a high workload. This also means that the role instances should always be completely stateless, since the Azure Platform can provision or delete, switch-off or switch-on any instance of any of the roles at any given time.
+
+\subsection{Azure Availability Sets}
+
+Azure Availability Sets (AAS) allow the configuration and management of the availability of one's virtual machines. This is achieved through the specification of schedules and instance counts for a combination of virtual machines which would then be scaled down or turned off according to the specified availability rules. The Azure availability sets also allows one to specify a specific metric which should be monitored and used as indicator or whether or not to create a new VM or switch online VMs off / Delete. The "Scale by metric" allows settings easy to monitor thresholds that will allow the system to handle unexpected workloads \cite{Jelen2011}.
+
+\subsection{Vertical and Horizontal Scaling}
+
+Vertical scaling refers to improving or reducing the computing power of a specific virtual machine running a specific instance or role of an application. In contrast, horizontal scaling refers to instead adding extra instances of the same application to help handle the increased workload. Therefore vertical scaling requires using a stronger virtual machine and horizontal scaling refers to adding more virtual machines.
+ 
+Windows azure primarily uses horizontal scaling or the deployment of multiple instances for on demand scaling without redeployment or downtime. However, Azure also provides different tiers and VM sizes that can be used to scale vertically \cite{Betts2012-ad}.
+ 
+Other useful scaling tools include the usage of Azure Caching and Azure Traffic Manager. Azure Caching includes a scalable session provider for ASP.NET as well as output and data caching \cite{Microsoft_Corporation_undated-ej}. Azure Traffic manager allows you to control the traffic flow between your Azure Deployments through using powerful rule based Domain Name System (DNS) redirecting. Helping you to distribute sudden increased workloads on specific instances \cite{Betts2012-ad}.
+
+\section{Data Persistence}
+
+Designing effective, scalable and secure data architecture is considered one of if not the main design requirement of a multi-tenant architecture.
+Data Multi-tenancy usually requires some form of \cite{Betts2012-ad}:
+
+\begin{itemize}
+\item Schema-based, schema-less or hybrid approach
+\item Data partitioning scheme for data isolation
+\item Scalability
+\item Extensibility and customization support
+\end{itemize}
+
+
+\subsection{SQL, NoSQL or Hybrid}
+
+As we have discussed in the previous section on Azure Storage options, the cloud platform offers an array of storage technologies that could be used for the application. Choosing an appropriate one has an immense impact on the rest of the application design, but even more so in the actual implementation of the application. Azure SQL Server offers us a strong, schema-based relational storage mechanism. In addition Azure SQL supports the use of schema-less XML columns. This introduces a type of hybrid approach allowing us to have a partially well defined schema with extensible schema-less columns. Finally Azure Table storage offers a key-value type NoSQL storage approach.
+ 
+Choosing the correct type of storage to use depends on a combination of factors such as:
+ 
+
+\begin{enumerate}
+\item Application Type
+\begin{itemize}
+    \item Core requirement: Consistency or Scalability
+    \item Internal system or public one
+    \item Application for the data or a database in service of an system
+\end{itemize}
+\item Productivity
+\begin{itemize}
+\item 
+    \item NoSQL DB support and tooling support still immature
+    \item A query for NoSQL is more complex especially in cases where you           need to use MapReduce. However, there should be less queries              since the data is not the centre point
+    \item Schema changes: Consistent or continually changing
+\end{itemize}
+\item Skill sets and investments
+\begin{itemize}
+    \item Current team skills: Does the team have a lot of experience with           Relational Database Management System (RDBMS)
+    \item Infrastructure: Licences that you have for relational etc
+    \item Team support: Does the developer and administrator teams have a           culture towards one or the other
+\end{itemize}
+\end{enumerate}
+
+Below a certain threshold NoSQL might actually be slower than relational databases.
+
+\subsection{Data Partitioning}
+
+According to \cite{Betts2012-ad}, partitioning by tenant ID is a common approach in many multi-tenant systems and allows for an natural, easy to use boundary since it will allows all queries to be scoped to a single-tenant.
+ 
+With the introduction of cloud computing and the change from single-tenant to multi-tenant architectures different horizontal database partitioning schemes have become popular. In contrast to vertical partitioning/normalization that splits tables into different tables and columns within the same database schema. Horizontal partitioning or sharding splits database tables horizontally based on key or key ranges across multiple instances of the same schema.
+ 
+One of the most popular horizontal partitioning techniques supported by Azure Storage until 2014 included Database Federations. However, supports for Database Federations have been dropped in backing of an automated easy to implement sharding approach based on industry standards.
+
+\subsection{Sharding}
+
+Sharding is a horizontal partitioning technique used to distribute large data sets across a number of databases that share a common schema \cite{Microsoft_Corporation_undated-ej}. In most sharding implementations, data is separated in such a way that each row appears only once and in one shard \cite{Wilder2012-so}. Each subset of data or shard is stored on another physical database while the combination of all of them represents a logical database \cite{Wilder2012-so}
+ 
+Advantages of sharding include:
+\begin{itemize}
+\item Higher Availability: If one instance of a shard goes down the others still operate. Particularly useful in a multi-tenant environment. Also removes the single point of failure that could
+\item Faster queries: Since smaller amounts of data are queries per shard, queries are faster and indexes are smaller
+\item Higher Input/output (IO) and bandwidth: Sharding allows you to write concurrently to different shards further improving performance \cite{Rahul2008-vo}.
+\item Individual scaling: Since each shard runs on a different virtual machine, it is easy to scale up any machines that experience a higher workload. Additionally, it is possible to split shards of this nature into more shards effectively decreasing the workload. Similarly, it is possible to merge shards for that experience lower overall workloads allowing you to effectively scale down. With Elastic Scaling, it is even possible to do these split/merge operations dynamically.
+\item Individual backup and restore: Especially when utilizing a shard per tenant approach, this allows for easy backing up of a specific tenants data
+\item Isolation: Using shards ensures data isolation based on the sharding strategy used. In our case, sharding per tenant would ensure that no one tenant could access other tenants data
+\item Removal of single node restrictions: Sharding helps to address all challenges centred on the limitations of a single database nodes restriction. Query volume, update volume, database network bandwidth and storage limitations are all overcome by implementing a proper sharding pattern \cite{Wilder2012-so}
+ \end{itemize}
+ 
+ 
+Disadvantages of sharding:
+\begin{itemize}
+\item Increased implementation complexity: Implementing sharding has historically been an over the top complex process. In Azure, this problem has been tackles through the introduction of the Elastic Scale libraries that handle the development complexities through using industry standard approaches.
+\item Multiple schema changes required: Since the database schema is stored in each shard instance, a change to the schema would need to be made to all such instances. At current, entity framework helps to handle these kinds of schema changes using migrations and multiple update database executions.
+\item Introduction of another single point of failure: When utilizing a partitioning scheme that uses a lookup table or shard map etc., this introduces a new single point of failure.
+\item Shared nothing architecture means cross shard queries are restricted if even supported. Since shards do not share disk, memory or any other resources it is not possible to perform normal queries utilizing multiple shards. Therefore it is a requirement that all common business operations should be able to execute on only a single shard \cite{Wilder2012-so}.
+\item Duplicated reference data. Reference data or business entity independent data should be replicated to each shard to ensure that business operations could still be performed without issue.
+\end{itemize}
+ 
+Azure offers a set of different storage options each suited to a particular usage. Amongst the most commonly used storage options include:
+
+\begin{itemize}
+\item Virtual Machine Storage: Azure allows the setup of a completely dedicate virtual machine running any required storage type such as SQL Server, MongoDB or even Cassandra. However using this option requires setup and administration of the VM and persistence to additional data disks is managed through Azure Blob storage
+\item Azure SQL Database: A cloud based PaaS solution to RDBMS including almost all the functionality of Microsoft SQL Server without the need to administrate or setup the VM.  Full support for most T-SQL language and features along with other SQL Server tools. Essentially it is a managed and hosted instance of SQL Server where administration of the data is handled by the Azure customer and the rest such as backups, high availability, point in time restore and geo-redundancy is handled by the Azure Platform \cite{Microsoft_Corporation_undated-ej}
+\item Azure Tables: An implementation of NoSQL key/value store that allows storing of different types in a grouping that is then retrievable via a unique key. Although, Tables does not offer support for advanced or complex operations such as join, it does provide a fast storage mechanism for typed data that is both scalable and simple to use \cite{Microsoft_Corporation_undated-ej}.
+\item Azure Binary Large Objects (BLOBS): A storage type designed for persisting unstructured Binary Large Objects (BLOBS) \cite{Microsoft_Corporation_undated-ej}. With a single blob size of up to one terabyte being supported, blobs are an inexpensive option for the storage of media and files. Azure BLOBS also allow utilizing blob storage as Azure Drives, allowing you to store data on what appears to be normal mountable file system drives that are in turn stored as an blob
+\item Azure File Service: A Server Message Block (SMB) based file sharing service used to share files between VMs and allowing access to files for Representational State Transfer (REST) so files are usable from outside virtual networks.
+\end{itemize}
+
+
+Although Azure offers a set of storage options, most applications will consider using a combination of them to fulfil its needs; this approach is commonly referred to as a polyglot persistence model. This would come at a greater cost of initial design and implementation complexity, but ultimately offer the advantages for each of its storage types.
+ 
+ 
+ \subsection{Azure SQL Database Elastic Scaling}
+ 
+According to\cite{Ries2009-td}, when designing a sharding architecture for start-ups, it is important that the architecture: has the ability to handle adding more shards, requires only proportionally sized code changes when changing partitioning methods, support multiple sharding schemes and has clear rules and follows guidelines to make code understandable.
+These requirements are mostly met in Azure Elastic Scaling (AES). Since AES uses libraries that implement the code and that code is maintained (via Nuget) by the team responsible at Microsoft it removes the need for implementing overly complex code to enable us to use a sharding scheme. Secondly, using AES supports dynamic shard merge/split operations and also handles the updating of the shard map manager so even when you change how and where data is stored, changes to application code remain minimal to none. Finally, since AES is a Microsoft product it has adaptation support and well documented methods for implementation and handling. Since most code is encapsulated in the AES libraries, the only code that needs to be documented and maintained is the access to the shard map manager to obtain the appropriate shards to query.
+
+\section{Sharding or No Sharding}
+
+After considering the existing XV-Media and XV-Marketplace databases, the actual benefits of sharding at the moment are less than the increased complexity for implementing and migrating the data. The XV-Marketplace used for storing tenant data is quite small and requires little to no scaling in the foreseeable future. However, serious consideration needs to be given to changing the current implementation of the XV-Media database.
+ 
+Finally, the current implementation of AES is in Public Preview Mode only. This means that it is still only a pre-release used to generate customer feedback and improvement. It also means that adoption should be delayed until such a time as the feature enters Public Release Mode which means it would be generally available and supported for adoption.
+ 
+Some of the concerns currently stalling adoption of the scaling technology are the requirement to change queries that access data from multiple shards to Multi-Shard Queries (MSQ).
+
+\subsection{Backups}
+
+For backups Azure offers a variety of backup options allowing one to backup either to the cloud or on premise storage. This includes options to run incremental or full backups and an array of technologies including compression, encryption and data transfer throttling \cite{Microsoft_Corporation_undated-ej}.  Although the design of a sound data protection and backup policy is essential to the architectural design, for intents and purposes of this document is has been considered out of scope as it does not directly influence any architectural design concerns.
+
+\section{Networking}
+
+Since our application does not require any specific networking architectures or solutions such as hybrid private clouds or shared public private hosting network considerations in relation to the design of the architecture is a minor concern. However, for relevance and diligence some of the available Azure networking options is investigated.
+ 
+\begin{itemize}
+\item Virtual Network: This offers the ability to create Virtual Private Network (VPN) connections between hosted virtual machines and your private network to allow your VMs to be accessed and used as if they were on premise
+\item Express Route: Similar to Virtual Networks but does not setup the VPN over the public cloud, but instead uses a dedicated line to connect your hosted and on site networks
+\end{itemize}
+
+Apart from these networking technologies, Azure also includes a powerful Network Management tool called "Traffic Manager". Essentially, Traffic Manager allows you to set up rules regulating the requests from users across Azure Data centres and VM instances. It allows you to setup workload, geographic or metric based rules that define how request form users are directed to data centres \cite{Microsoft_Corporation_undated-ej}.
+
+\section{Performance}
+
+\subsection{Azure Cache}
+
+Azure provides several services and tools to help improve the performance of your hosted application or virtual machine. One of the most important performance considerations for our requirements is that of caching. At time of writing Azure included two different caching technologies but recommended only using their latest Redis caching technology for new product development. The main objective of using a cache is to store frequently used data in memory which is much faster to access than storage. This is exactly what Azure Caching offers. It allows the storing of cache data within the hosting VM or using Azure Redis caching hosting a dedicated shared. Azure Caching also supports data synchronization across multiple VMs. It is important to note that Azure catching includes a set of now obsolete caching technologies such as shared, in-role and managed caching \cite{Microsoft_Corporation_undated-ej} and that Azure Redis cache technology has superseded Azure Cache as preferred caching technology.
+
+The Azure Redis Cache is based on the open source Redis Cache and offers a dedicated Redis Cache managed by the Azure Platform and accessible from any of your hosted applications. Current Redis caching includes two tiers: Basic which has a single node and standard with two nodes and replication support. Both tiers include scaling but only the standard tier is backed by a Service Level Agreement (SLA) \cite{Azure_Redis}. Unlike conventional caching which works solely with key-value pairs, Redis Cache includes high performance data types. Additionally, Redis allows atomic operations on these type like incrementing or concatenation, sorting. There are other powerful caching features that are also part of Redis that fall outside scope of this paper but might be important for future considerations.
+
+\subsection{Content Delivery Network (CDN)}
+
+Apart from caching, using Content Delivery Networks is an easy way to improve the performance of your application. The Azure CDN uses a network of different sites that store Azure BLOBS. This means that when users access a blob for the first time it is copied from the Azure Blob storage to a local CDN store in the user's locale. This improves access to your blobs for all users in that locale. CDN is a particularly powerful performance improvement tool for use with media, more specifically large files or videos. Since the XV application requires video uploading, downloading and viewing by its clients it is important to consider using CDN to help deliver the application media faster.
+
+
+
+
