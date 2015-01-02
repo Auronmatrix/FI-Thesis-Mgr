@@ -21,9 +21,14 @@ CQRS embraces the fact that consistency of data is given up in order to provide 
  \section{Queue Centric Workflow}
  
  Queue Centric Workflow (QCW) patterns describe a method for loosely coupling requests between the presentation layer and lower application layers as seen in figure \ref{fig:CQRS}. A common problem with SaaS implementations is its unpredictable loads \cite{Swanson}. In multi-tenant applications this becomes an even bigger issue as spikes in usage from one tenant directly impact other tenants \cite{Betts2012-ad}. In order to isolate tenants from the impacts of load spikes a QCW based load levelling pattern has been implemented. The pattern describes the introduction of a queue between tasks and services that run asynchronously \cite{Wilder2012-so}. A task posts a message into a queue that contains all required data relevant to its execution. A service then retrieves these messages and processes them at a consistent rate. This allows the queue to act as a buffer protecting the service from becoming flooded and affected to dramatically by load spikes.
-It is also possible to scale the service that processes queue messages in order to handle increased queue loads. In our project we considered using an Azure Worker Role \ref{appendix} to be setup as a service that consumes our queued tasks and executes them. However, due to the lower costs and ease of implementing Azure WebJobs compared to worker roles this option was used for demonstration purposes instead. Migration between these two Azure services is extremely simple and required minimal modification if it would be required for production implementation. The prototype uses the CQRS workflow as seen in figure \ref{fig:CQRS}. A Console Application that is hosted as WebJob runs continuously and consumes messages from Azure Storage Queues \ref{appendix}. The presentation layer creates tasks in the form of commands (see below) that is posted to the queue and then executed in a consistent manner by the WebJob.
+It is also possible to scale the service that processes queue messages in order to handle increased queue loads. In our project we considered using an Azure Worker Role \ref{appendix} to be setup as a service that consumes our queued tasks and executes them. However, due to the lower costs and ease of implementing Azure WebJobs compared to worker roles this option was used for demonstration purposes instead. Migration between these two Azure services is extremely simple and required minimal modification if it would be required for production implementation. The prototype uses the CQRS workflow as seen in figure \ref{fig:CQRSFlow}. A Console Application that is hosted as WebJob runs continuously and consumes messages from Azure Storage Queues \ref{appendix}. The presentation layer creates tasks in the form of commands (see below) that is posted to the queue and then executed in a consistent manner by the WebJob.
  
- %%%%%%%%%%%%%%% Command and Query Flow Diagram
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{CQRSFlow}
+\caption{CQRS, QCW and Command pattern work flow}
+\label{fig:CQRSFlow}
+\end{figure}
  
  
  \section{Command Pattern}

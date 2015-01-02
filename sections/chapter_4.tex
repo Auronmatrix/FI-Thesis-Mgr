@@ -2,7 +2,12 @@
 
 This chapter introduces the XV Application (XVA) as the research case study in order to illustrate the application of multi-tenancy to a real world SaaS application as example. It aims to define a concrete set of design inputs and requirements combined with the current context of the XV SaaS application and attempts to use it as premise for architecting our multi-tenant model.
 
-%%%%%%%%%%%%%%%%%  Figure Crossvertise Platform
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{cross_use_case}
+\caption{XV Use Case!!!!!!!!!!!!!!!!!!!!!!!!!!}
+\label{fig:cross_use_case}
+\end{figure}
 
 \section{XV GmbH}
 
@@ -10,7 +15,12 @@ Crossvertise GmbH henceforth "XV", is a Munich based SaaS provider and start-up.
  
 The XV Application (XVA) integrates over 80\% of Germany's advertising and publishing data to enable its users to book mobile, online, cinema, television, radio or out-of-home advertising easily and effortlessly online.
 
-%%%%%%%%%%%%%  Availability Set Diagram
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{xv_azure_arc}
+\caption{XV Conceptual Architecture Blueprint}
+\label{fig:xv_azure_arc}
+\end{figure}
 
 \section{The XVA Background}
 
@@ -28,9 +38,14 @@ At time of writing XV was running 12 instances of their XV Application on Window
 As a start-up company, XV has subscribed to Microsoft's BizSpark program which helps start-ups engage in software development by providing them with open access to many of Microsoft's technologies and tools \cite{BizSpark}. This has allowed the company to gain access to the public cloud through Microsoft Azure and develop its application using Visual Studio, C\# and ASP.NET Model, View Controller (MVC). Access to these resources have been the primary decisive factor in choices of technologies used in the application and the current IT team has been structured largely around these Microsoft technologies. It is for these reasons that this research paper has continued to use technologies and tools that align with this strategy, however in cases where newer technologies have become available they have been taken into consideration.
  
  
-A more precise breakdown of application technologies can be seen in \ref{fig:!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!}.
+A more precise breakdown of application technologies can be seen in \ref{fig:tech_breakdown}.
 
-%%%%%%%%%%%%%%%% Cloud Service Diagram
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{tech_breakdown}
+\caption{XV Technology Breakdown}
+\label{fig:tech_breakdown}
+\end{figure}
 
 The XVA was designed using the Microsoft's ASP.Net Framework. It utilizes the MVC architectural pattern for the program design and the open source Entity Framework for Object Relational Mapping (ORM) to a collection Microsoft SQL databases. Currently the application is hosted using Microsoft Azure Cloud Services. Website is hosted on Microsoft's Internet Information Services (IIS) installed on an Azure Web Role virtual machine. In conjunction with the Web Role the application uses a helper application running on an Azure Worker Role virtual machine to conduct database, email and other operational tasks. The team uses TeamCity build server for continuous integration and testing and Git and GitHub for source control. Data is persisted to two different Azure SQL Databases, firstly is the marketplace database which stores all of the application e-Commerce transaction and user data and the media database which stores all of the media specific data such as availability, pricing, form factors and publishers. The media DB is quite large (11GB) and is updated every night through the integration of different advertising data outlets and sources. The application stores large binary objects such as videos, images and sounds for the application using Azure Blob storage and uses Azure Cache in order to improve performance. XV currently does not utilize any third party components that would restrict the implementation of a multi-tenant architecture. The majority of code of the XVA was written using C\# (66.3\%) but also includes JavaScript (31.4\%) and Cascading Style Sheets (CSS) (2.1\%) for front-end design.
 
@@ -39,7 +54,12 @@ The XVA was designed using the Microsoft's ASP.Net Framework. It utilizes the MV
 The application solution consists of 11 projects. The Xv.Marketplace.MVC project includes all MVC code, this includes View Models, Views and Controllers. Although conventional MVC uses models directly within the MVC application, the models for the application have been extracted into the Xv.Marketplace.Domain project. The models are presented using Plain Old CLR Object (POCO) classes combined with Data Annotations that provide the models metadata. The business logic project acts as a service layer and as the name suggest is responsible for all the business logic applied when objects are retrieved from the repositories. The Xv.Marketplace.Worker project is used to complete functional tasks that are not handled by the MVC project such as sending of emails, reminders, cleaning up of storage and indexing. The repositories project is responsible for communicating with the Microsoft SQL database and uses Entity Framework to map objects to a relational database structure and vice versa. The repositories are mostly concerned with Create, Read, Update and Delete (CRUD) operations of entities but also handle security. Finally, the Infrastructure project is used for cross cutting concerns and utilities. This includes resources used in the different projects, helper, wrapper and extension classes. All of the Test projects include either Unit tests for their corresponding projects or in the case of the repositories Test project, integration tests.
 
 
-%%%%%%%%%%%%%%%%%% XV Marketplace Infrastructure Diagram
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{xv_proj_arc}
+\caption{XV Package Diagram}
+\label{fig:xv_proj_arc}
+\end{figure}
 
 
 \section{XVA Persistence Schemas}

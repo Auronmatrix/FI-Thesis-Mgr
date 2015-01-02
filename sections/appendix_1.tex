@@ -1,5 +1,6 @@
 \chapter{Tables}
 
+\section{4+1 Mapping}
 \begin{sidewaystable}[h]
 \centering
 \begin{tabularx}{\textwidth}{X X X X}
@@ -20,12 +21,9 @@
 
 
 \section{ISO Definitions}
-ISO42010 Terms \cite{InternationalOrganizationOfStandardization2011}
-
-
 \begin{table}[h]
 \centering
-\begin{tabularx}{\textwidth}{|l|X|l}
+\begin{tabularx}{\textwidth}{|p{2.5cm}|X|l}
 \cline{1-2}
 \cellcolor[HTML]{C0C0C0}\textbf{Term} & \cellcolor[HTML]{C0C0C0}\textbf{Definition}                                                                                                                                              &  \\ \cline{1-2}
 Architecting                          & Process of conceiving, defining, expressing, documenting, communicating, certifying proper implementation of, maintaining and improving an architecture throughout a system's life-cycle &  \\ \cline{1-2}
@@ -40,3 +38,262 @@ Environment                           & context determining the setting and circ
 \caption{ISO 42010 Definitions}
 \label{table:iso_def}
 \end{table}
+\newpage
+
+
+\section{Quality Attribute Scenarios}
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{|
+>{\columncolor[HTML]{EFEFEF}}l |X|l}
+\cline{1-2}
+\multicolumn{2}{|l|}{\cellcolor[HTML]{C0C0C0} Scalability: System loads requires scaling horizontally} &  \\ \cline{1-2}
+Element & \cellcolor[HTML]{EFEFEF}Scenario &  \\ \cline{1-2}
+Stimulus & 
+
+Requires specific nodes/components to accommodate more users 
+& \\ \cline{1-2}
+Source & 
+
+System owner 
+& \\ \cline{1-2}
+Environment & 
+
+Normal Operation, Heavy System Loads 
+&  \\ \cline{1-2}
+Artefact & 
+
+Specific system node/component 
+& \\ \cline{1-2}
+Response & 
+
+Scale specific node/component horizontally for duration of the heavy load and scale back once load is reduced below certain threshold 
+&  \\ \cline{1-2}
+Measure & 
+
+Scale by metric 
+&  \\ \cline{1-2}
+\end{tabularx}
+\caption{QAR1 Scenario}
+\label{table:qar1}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{|
+>{\columncolor[HTML]{EFEFEF}}l |X|l}
+\cline{1-2}
+\multicolumn{2}{|l|}{\cellcolor[HTML]{C0C0C0} Availability: Application Node Failure} &  \\ \cline{1-2}
+Element & \cellcolor[HTML]{EFEFEF}Scenario &  \\ \cline{1-2}
+Stimulus & 
+
+System node/component has a fault 
+& \\ \cline{1-2}
+Source & 
+
+Fault (External or Internal), Datacenter failure
+& \\ \cline{1-2}
+Environment & 
+
+Normal, Datacenter Maintenance, Degraded System Mode
+&  \\ \cline{1-2}
+Artefact & 
+
+System 
+& \\ \cline{1-2}
+Response & 
+
+In event of one of the system component failures all operations should be directed to alternative running instances. System should spin up new instances if required 
+&  \\ \cline{1-2}
+Measure & 
+
+Downtime interval 
+&  \\ \cline{1-2}
+\end{tabularx}
+\caption{QAR2 Scenario}
+\label{table:qar2}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{|
+>{\columncolor[HTML]{EFEFEF}}l |X|l}
+\cline{1-2}
+\multicolumn{2}{|l|}{\cellcolor[HTML]{C0C0C0} Modifiability: Adding Tenants} &  \\ \cline{1-2}
+Element & \cellcolor[HTML]{EFEFEF}Scenario &  \\ \cline{1-2}
+Stimulus & 
+
+Wants to add a tenant to the system without custom views
+& \\ \cline{1-2}
+Source & 
+
+Tenant Manager, Administrator, Developer
+& \\ \cline{1-2}
+Environment & 
+
+Normal operations on Front-end
+&  \\ \cline{1-2}
+Artefact & 
+
+System 
+& \\ \cline{1-2}
+Response & 
+
+The system adds the new tenant to the tenant data and allows the tenants domain to access the system using the default views 
+&  \\ \cline{1-2}
+Measure & 
+
+Effort to add tenant 
+&  \\ \cline{1-2}
+\end{tabularx}
+\caption{QAR3 Scenario}
+\label{table:qar3}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{|
+>{\columncolor[HTML]{EFEFEF}}l |X|l}
+\cline{1-2}
+\multicolumn{2}{|l|}{\cellcolor[HTML]{C0C0C0} Tenants performance isolation} &  \\ \cline{1-2}
+Element & \cellcolor[HTML]{EFEFEF}Scenario &  \\ \cline{1-2}
+Stimulus & 
+
+Utilizes a large number of resources or load creates a load spike
+& \\ \cline{1-2}
+Source & 
+
+Tenant
+& \\ \cline{1-2}
+Environment & 
+
+System under high loads
+&  \\ \cline{1-2}
+Artefact & 
+
+System and Services
+& \\ \cline{1-2}
+Response & 
+
+Other tenants should not be noticeably affected by a single tenants increased loads. Little to no impact on front-end responsiveness 
+&  \\ \cline{1-2}
+Measure & 
+
+Front-end latency
+&  \\ \cline{1-2}
+\end{tabularx}
+\caption{QAR4 Scenario}
+\label{table:qar4}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{|
+>{\columncolor[HTML]{EFEFEF}}l |X|l}
+\cline{1-2}
+\multicolumn{2}{|l|}{\cellcolor[HTML]{C0C0C0} Modifiability: Adding Tenants with Custom Views} &  \\ \cline{1-2}
+Element & \cellcolor[HTML]{EFEFEF}Scenario &  \\ \cline{1-2}
+Stimulus & 
+
+Wants to add a tenant to the system with custom views
+& \\ \cline{1-2}
+Source & 
+
+Tenant Manager, Administrator, Developer
+& \\ \cline{1-2}
+Environment & 
+
+Normal operations on Front-end
+&  \\ \cline{1-2}
+Artefact & 
+
+System
+& \\ \cline{1-2}
+Response & 
+
+The developers create custom views that correspond to the tenants requirements and do a redeployment, after QAR3 is executed the system should then use the custom views over the default views for the tenant with the specified tenant configuration
+&  \\ \cline{1-2}
+Measure & 
+
+Effort of provisioning new tenant with custom views
+&  \\ \cline{1-2}
+\end{tabularx}
+\caption{QAR5 Scenario}
+\label{table:qar5}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{|
+>{\columncolor[HTML]{EFEFEF}}l |X|l}
+\cline{1-2}
+\multicolumn{2}{|l|}{\cellcolor[HTML]{C0C0C0} Security: Tenant Data Isolation} &  \\ \cline{1-2}
+Element & \cellcolor[HTML]{EFEFEF}Scenario &  \\ \cline{1-2}
+Stimulus & 
+
+Wants to ready tenant specific data from the respective data store
+& \\ \cline{1-2}
+Source & 
+
+Tenant Advertisers, Tenant Managers
+& \\ \cline{1-2}
+Environment & 
+
+Normal operation
+&  \\ \cline{1-2}
+Artefact & 
+
+System and System Data
+& \\ \cline{1-2}
+Response & 
+
+The system should isolate other tenant data and ensure that no unauthorized access to other tenants data is made and no modifications of other tenant data takes place
+&  \\ \cline{1-2}
+Measure & 
+
+Tenant Data Leakage (0\% allowed)
+&  \\ \cline{1-2}
+\end{tabularx}
+\caption{QAR6 Scenario}
+\label{table:qar6}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{|
+>{\columncolor[HTML]{EFEFEF}}l |X|l}
+\cline{1-2}
+\multicolumn{2}{|l|}{\cellcolor[HTML]{C0C0C0} Usability: Modify Front-end per Tenant} &  \\ \cline{1-2}
+Element & \cellcolor[HTML]{EFEFEF}Scenario &  \\ \cline{1-2}
+Stimulus & 
+
+Wants to adapt the system UI to specific tenant workflows and requirements
+& \\ \cline{1-2}
+Source & 
+
+Tenant Manager
+& \\ \cline{1-2}
+Environment & 
+
+Run-time, Configure Time under normal operation
+&  \\ \cline{1-2}
+Artefact & 
+
+System, Front-End
+& \\ \cline{1-2}
+Response & 
+
+System UI workflow and requirements should be settable through configuration switches that are dynamically loaded and manipulate the systems UI, workflow and usability
+&  \\ \cline{1-2}
+Measure & 
+
+Ease of use, level of system adaptability
+&  \\ \cline{1-2}
+\end{tabularx}
+\caption{QAR7 Scenario}
+\label{table:qar7}
+\end{table}
+
