@@ -1,10 +1,12 @@
 \chapter{Cloud Architecture Design Patterns}
 
-This chapter introduces different design patterns that were used in architecting the multi-tenant system and attempts to explain and justify their requirement. A short description of how these patterns are applied in the prototype is also provided as well as relevant technologies used in conjunction.
+This chapter introduces different design patterns that were used in Chapter \ref{chap:ad}. It aims to provide some background on the chosen patterns and justify their requirement. A short description of how these patterns are applied in the prototype is also provided as well as relevant technologies used in conjunction.
 
 \section{Cloud Design Patterns \& Multi-tenancy}
 
-A fundamental decision in any software and system architecture venture is choosing appropriate design patterns. Wilder \cite{Wilder2012-so} defines design patterns as an approach that can be duplicated in order to produce an exact and expected outcome. One of the most referenced definitions of a pattern is by Alexander et. al which states that a pattern describes a problem that occurs over and over in our environment, and then describes the core of the solution to that problem in such a way that you can use the solution a million times over, without ever doing it the same way twice \cite{Alexander1977-ni}. In order to address some of the requirements of the system and help solve some problems that are introduced by using a multi-tenant approach, implementation of some design patterns are necessary. Some of these problems include addressing scalability, handling server load spikes and variations and tenant isolation.
+A fundamental decision in any software and system architecture venture is choosing appropriate design patterns. Wilder \cite{Wilder2012-so} defines design patterns as an approach that can be duplicated in order to produce an exact and expected outcome. One of the most referenced definitions of a pattern is by Alexander et. al which states that a pattern describes a problem that occurs over and over in our environment, and then describes the core of the solution to that problem in such a way that you can use the solution a million times over, without ever doing it the same way twice \cite{Alexander1977-ni}. In order to address some of the requirements of the system and help solve some problems that are introduced by using a multi-tenant approach, implementation of some design patterns are necessary. Some of these problems include addressing scalability, handling server load spikes and variations and tenant isolation. 
+
+\textit{Note: The selection of these patterns are a result of an modified Attribute-Driven Design Approach (see section \ref{sec:add}) and qualitative interpretation of its results (see section \ref{sec:arcdrivers}).}
 
 \section{Eventual Consistency}
 
@@ -40,17 +42,17 @@ It is also possible to scale the service that processes queue messages in order 
  
  Application performance can significantly be improved by implementing a caching solution. By using a cache an application reduces the amount of calls to its data stores and instead reads commonly used data from a cache. Instead of using persistent storage to hold data, caches are usually implemented in memory and these significantly increase its read and write speeds. However, caches data need to be constantly maintained in order to ensure consistency. One pattern that helps with solving the consistency issue between the data store and the cache is the Cache Aside pattern. This is a very simple pattern that describes using three basic steps in order to ensure cache data is updated \cite{Swanson}:
  
-    begin{itemize}
-        item On query request, check if the item is currently in the cache
-        item If the item is in the cache it returns the cached version
-        item If the item is not in the cache, retrieve it from storage and         save it to the cache
-    end
+    \begin{itemize}
+        \item On query request, check if the item is currently in the cache
+        \item If the item is in the cache it returns the cached version
+        \item If the item is not in the cache, retrieve it from storage and save it to the cache
+    \end{}
  
 On command requests the object in the cache should be invalidated in order to be retrieved again on its next query request. For this thesis the Cache Aside pattern is used in combination with Azure Redis Cache. The cache is updates are handled in the service layer. Any queries retrieve the data from its respective storage and then serialized and added to the cache. Any commands delete the cache item with a cache key corresponding to the id.
 
 
- \section{Conclusion}
+\section{Conclusion}
  
- Multi-tenant applications introduce specific problems that are solvable through application of design patterns. Firstly the problem of tenant isolation is addressed through application of a QCW pattern or more precisely, a queue based load levelling pattern. This QCW pattern is further extended by applying the command pattern, effectively turning tasks into self containing objects that could be queued up for later execution. The problem of scalability is also addressed by implementing the QCW as it allows commands to be lined up and handled in the asynchronously and in the background. This alone however is not enough to be considered truly cloud -native and scalable. In order to ensure easy scalability, the CQRS pattern is introduced. This pattern helps to separate all query operations from command operations all the way down to the models.
+Multi-tenant applications introduce specific problems that are solvable through application of design patterns. Firstly the problem of tenant isolation is addressed through application of a QCW pattern or more precisely, a queue based load levelling pattern. This QCW pattern is further extended by applying the command pattern, effectively turning tasks into self containing objects that could be queued up for later execution. The problem of scalability is also addressed by implementing the QCW as it allows commands to be lined up and handled in the asynchronously and in the background. This alone however is not enough to be considered truly cloud -native and scalable. In order to ensure easy scalability, the CQRS pattern is introduced. This pattern helps to separate all query operations from command operations all the way down to the models.
  
 This combined with the QCW allows the application to easily scale its command processing by provisioning more instances of the queue handler. Similarly, it also provides the ability for the query processing through provisioning of more read only data stores to be accessed. These patterns are used in conjunction with the Cache Aside pattern through storing data in the cache on query operations and deleting items from the cache on command operations provides improved overall performance. Instead of attempting to ensure consistency in the system, availability is considered higher priority and thus allows the implementation of these patterns in ensuring the BASE guarantees are met.

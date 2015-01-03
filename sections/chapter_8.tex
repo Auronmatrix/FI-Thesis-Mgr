@@ -1,8 +1,9 @@
 \chapter{Architecture Description}
-
+\label{chap:ad}
 This chapter provides a summary of the research done for this thesis as an resulting artefact. This artefact takes the form of an architecture description in accordance to ISO42010 and is expressed in terms of the 4+1 view model. The architecture description is also created through following an attribute-driven design approach. Utimately this chapter aims to provide enough specifics, diagrams and details to be useful in future implementations of a multi-tenant system or prototype. 
 
 \section{Adapted Attribute-Driven Design Approach}
+ \label{sec:add}
 In creating an architecture description, the architect is faced with a range of diverse approaches. Each one of these approaches offers a certain framework for creating the AD and sets certain context and constraints on the design used. One such comprehensive approach to AD design is Attribute-Driven Design (ADD). In its essence, ADD is an approach to defining an AD that uses the software's quality attribute requirements as baseline for the design process \cite{Wojcik2006}. This approach uses an iterative, recursive process to attempt to decompose a system into elements by applying architectural tactics and patterns \cite{Wojcik2006}. The ADD approach provides highly detailed ADs that should satisfy all of the system requirements and quality attributes. This thesis uses a simplified and broad-viewed approach based on ADD in the creation of its architecture description. It does not attempt to completely follow ADD, but instead uses the ADD recommended process as blueprint for creation of the AD.
 
 \section{System Requirements and Constraints}
@@ -88,6 +89,7 @@ After assessing the requirements inputs, quality attribute scenarios and use cas
 
 
 \section{Architectural Drivers}
+ \label{sec:arcdrivers}
 An analysis of the architectural drivers for each element was made following the techniques outlined by Wood \cite{Wood2007}. This analysis can be seen in appendix \ref{table:architecturaldrivers}. Each requirements is analysed in accordance to its importance and impact or difficulty of implementation. This creates a combination of priorities as outlined by the case study and qualitative interpretation of research conducted. These priorities are then used to select the highest importance, highest impact drivers to architect first. 
 
 \subsection{Candidate Architectural Drivers (CAD)}
@@ -104,9 +106,7 @@ Using the architectural drivers and their priorities, all requirements that have
 \section{Design Concerns}
 The mapping of candidate architectural drivers seen in figure \ref{fig:designconcernmapping} further allows us to separate requirements that have a direct impact on our architecture from those that do not. After filtering out these requirements, each CAD can be connected to a specific architectural concern as described in Chapter \ref{chapter:architecting} Architecting a Multi-tenant System. By doing this mapping specific requirements are grouped together into specific concerns. Furthermore, these concerns indicate specific problems that needs to be addressed by our AD as well as which requirement can be used to indicate the effectiveness of the solution. The requirement is also used as perspective used in selecting appropriate architectural design patterns to use in the resolution of each concern. See table \ref{table:designconcerns} for the resulting mappings. 
 
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
 \begin{table}[h]
 \centering
 \begin{tabularx}{\linewidth}{lXl}
@@ -140,7 +140,7 @@ One important aspect to note from the concerns outlined in table \ref{table:desi
 In order to address each one of the concerns outlined in table \ref{table:designconcerns} different patterns have been evaluated. The term pattern used in this section refers to the definition by Alexander \cite{Alexander1977-ni}. As a result the term patterns describes any of the following system architecture patterns, design patterns, cloud architecture patterns, workflow patterns and even specific sub-types of patterns of any of the above. In essence, the patterns chosen have been a result of the qualitative interpretation of research done for this paper, personal experience \& skills as well as recommendations from various online sources. In addition the CQRS pattern has been examined specifically for its viability since members of XV have expressed direct interest in implementing it in spite of the domain being only slightly collaborative. 
 
 \subsection{Maintenance Concern}
-Implementation of multi-tenancy is the primary principle that is applied to simplify maintenance. Since the current XV platform requires modification of several application instance, uses different code bases for each tenant and has a complex deployment setup, it is clear why this principle will help with this concern. However, implementing multi-tenancy introduces other maintenance issues. In our case, QAR3/4 (see table \ref{tab:qar3}) requires that the system be maintainable in terms of adding new tenants. By using the suggested View Engine solution  discussed in section \ref{sec:viewengine}, we can remove many of the complexities of implementing custom views for tenants. Using a custom view engine will allow us to simply create new views that will be overwrite global ones for each tenant. Although many pure multi-tenant solutions suggest using an approach where all customization and configuration for tenants is done through configuration, our solution will not allow this. Tenants for our case require extreme degrees of front-end customization and are provisioned on a monthly basis. This slow provisioning time allows us to use the custom view engine approach instead of using a pure customization through configuration one. Additionally, the layering pattern has been chosen to help improve maintainability as well. Implementing the layering pattern allows us to decouple our system into different layers or tiers, each responsible for a specific grouping of functions. In contrast to the existing layering pattern implemented in XVA, a layering pattern that utilizes the layers suggested by DDD will be used instead. The primary justification for using the DDD layering process is XV's attempt to migrate towards a more domain driven architecture. This decision is also coupled with implementing CQRS.
+Implementation of multi-tenancy is the primary principle that is applied to simplify maintenance. Since the current XV platform requires modification of several application instance, uses different code bases for each tenant and has a complex deployment setup, it is clear why this principle will help with this concern. However, implementing multi-tenancy introduces other maintenance issues. In our case, QAR3/4 (see table \ref{tab:qar3}) requires that the system be maintainable in terms of adding new tenants. By using the suggested View Engine solution  discussed in section \ref{sec:viewengine}, we can remove many of the complexities of implementing custom views for tenants. Using a custom view engine will allow us to simply create new views that will be overwrite global ones for each tenant. Although many pure multi-tenant solutions suggest using an approach where all customisation and configuration for tenants is done through configuration, our solution will not allow this. Tenants for our case require extreme degrees of front-end customisation and are provisioned on a monthly basis. This slow provisioning time allows us to use the custom view engine approach instead of using a pure customisation through configuration one. Additionally, the layering pattern has been chosen to help improve maintainability as well. Implementing the layering pattern allows us to decouple our system into different layers or tiers, each responsible for a specific grouping of functions. In contrast to the existing layering pattern implemented in XVA, a layering pattern that utilises the layers suggested by DDD will be used instead. The primary justification for using the DDD layering process is XV's attempt to migrate towards a more domain driven architecture. This decision is also coupled with implementing CQRS.
 
 
 \subsection{Availability Concern}
@@ -154,8 +154,8 @@ The patterns mentioned in table \ref{tab:scalability_patterns} are also combined
 
 
 
-\subsection{Configuraiton and Customization Concern}
-The External Configuration Store Pattern is used to address the Configuration and Customization Concern. This pattern simply states that configuration information should be store outside of the application files. Using this approach allows us to centralize configurations for all different instances of our application and its components. Although this pattern refers specifically to application configuration, we will use this pattern to apply to tenant configuration as well. The External Configuration Store pattern suggests the implementation of a management back-end that can be used to manipulate configuration that is separated from the core application.
+\subsection{Configuration and Customisation Concern}
+The External Configuration Store Pattern is used to address the Configuration and Customisation Concern. This pattern simply states that configuration information should be store outside of the application files. Using this approach allows us to centralise configurations for all different instances of our application and its components. Although this pattern refers specifically to application configuration, we will use this pattern to apply to tenant configuration as well. The External Configuration Store pattern suggests the implementation of a management back-end that can be used to manipulate configuration that is separated from the core application.
 
 \section{Security Concern}
 
