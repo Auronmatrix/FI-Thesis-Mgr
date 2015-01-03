@@ -34,7 +34,7 @@ At time of writing XV was running 12 instances of their XV Application on Window
 
 
 \subsection{Technical Analysis of the XVA}
-
+\label{sec:techconst}
 As a start-up company, XV has subscribed to Microsoft's BizSpark program which helps start-ups engage in software development by providing them with open access to many of Microsoft's technologies and tools \cite{BizSpark}. This has allowed the company to gain access to the public cloud through Microsoft Azure and develop its application using Visual Studio, C\# and ASP.NET Model, View Controller (MVC). Access to these resources have been the primary decisive factor in choices of technologies used in the application and the current IT team has been structured largely around these Microsoft technologies. It is for these reasons that this research paper has continued to use technologies and tools that align with this strategy, however in cases where newer technologies have become available they have been taken into consideration.
  
  
@@ -72,6 +72,16 @@ As the XVA is the Core of the XV business model the exact information regarding 
 
 In addition to the basic technical design requirements, the core business requirement for shifting to a multi-tenant model is reduction of costs. The business model also requires specific provisioning of new tenants/application customers to be streamlined and simplified in order to reduce the amount of developer time required for setting up, customizing and deploying new instances for new tenants. At the current state, provisioning of a new application customer is a long manual process within which the XV Application is manipulated and customized according to the clients' specific needs. This proved to be an extremely time consuming, expensive and resource heavy process. Therefore, one of the fundamental business requirements multi-tenant systems includes high levels of customization with low provisioning costs.
 
+\section{Ubiquitous Language}
+Domain driven design requires the establishment of a ubiquitous language in order to facilitate communication between all stakeholders and parties of a project \cite{Evans2003}. The ubiquitous language aims to minimize any assumptions and misunderstandings between stakeholders in the system.  Although this thesis does not implement DDD as an approach, it does make use of some of its principles in order to simplify eventual migration to such an approach.
+
+Some of the definitions for the ubiquitous language include: 
+\begin{itemize}
+\item \textbf{Advertiser}: Person or Organization interested in advertising their own product or service through the application
+\item \textbf{Publisher}: Person or Organization that has ownership of some advertising medium, for example an Private Cinema that has its own advertising space before each movie. The publisher is the person from whom the application rents its medium and is responsible for displaying the booked advertisement on the rented medium. 
+\item \textbf{Manager}: XV employee responsible for handling and management of advertisements, this is primarily employees from the "Media" team. They are responsible for helping advertisers design and plan their advertising campaigns.
+\item \textbf{Tenants}: Groupings of clients or specific companies that use the XV application
+\end{itemize}	
 
 
 \section{Conclusion}

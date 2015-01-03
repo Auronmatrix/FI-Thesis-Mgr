@@ -297,3 +297,83 @@ Ease of use, level of system adaptability
 \label{table:qar7}
 \end{table}
 
+
+
+\section{Architectural Drivers \& Priorities}
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{lllX}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{|l|}{\cellcolor[HTML]{EFEFEF}Driver} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}Importance} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}Impact} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}Elements} \\ \hline
+\rowcolor[HTML]{FFCCC9} 
+FR2 & High & High & Presentation \\
+\rowcolor[HTML]{FFCCC9} 
+QAR2 & High & High & Infrastructure, Presentation, Application, Persistence \\
+\rowcolor[HTML]{FFCCC9} 
+QAR3 & High & High & Presentation \\
+\rowcolor[HTML]{FFCCC9} 
+DC2 & High & High & Infrastructure, Presentation, Application, Persistence \\
+\rowcolor[HTML]{FFCCC9} 
+QAR1 & High & High & Infrastructure, Presentation, Application, Persistence \\
+\rowcolor[HTML]{FFCE93} 
+QAR6 & Medium & High & Presentation, Infrastructure \\
+\rowcolor[HTML]{FFCE93} 
+DC1 & Medium & High & Infrastructure \\
+\rowcolor[HTML]{FFCE93} 
+FR10 & Medium & High & Persistence \\
+\rowcolor[HTML]{FFCE93} 
+FR5 & Medium & High & Presentation, Persistence \\
+\rowcolor[HTML]{FFFC9E} 
+QAR5 & High & Medium & Persistence \\
+\rowcolor[HTML]{FFFC9E} 
+QAR4 & High & Medium & Application \\
+\rowcolor[HTML]{F9F9E4} 
+FR11 & Medium & Medium & Presentation \\
+\rowcolor[HTML]{F9F9E4} 
+DC3 & Low & Medium & Presentation, Application, Infrastructure \\
+\rowcolor[HTML]{CAF6C9} 
+FR1 & High & Low & Presentation, Persistence \\
+\rowcolor[HTML]{CAF6C9} 
+FR3 & High & Low & Presentation, Application \\
+\rowcolor[HTML]{CAF6C9} 
+FR6 & High & Low & Presentation \\
+\rowcolor[HTML]{CAF6C9} 
+FR7 & High & Low & Presentation \\
+\rowcolor[HTML]{CAF6C9} 
+FR4 & Medium & Low & Presentation \\
+\rowcolor[HTML]{CAF6C9} 
+FR8 & Medium & Low & Presentation \\
+\rowcolor[HTML]{CAF6C9} 
+DC5 & Medium & Low & Presentation \\
+\rowcolor[HTML]{CAF6C9} 
+FR9 & Low & Low & Presentation \\
+\rowcolor[HTML]{CAF6C9} 
+DC4 & Low & Low & Presentation, Application
+\end{tabularx}
+\caption{Architectural Drivers, Priorities and Impact}
+\label{table:architecturaldrivers}
+\end{table}
+\begin{center}
+\textbf{Note}: FR = Functional Requirement, DC = Design Constraint, \\ QAR = Quality Attribute Requirement. For more information on specifics of these, please see section \ref{sec:reqandconstraints} on page~\pageref{sec:reqandconstraints}
+\end{center}
+\newpage
+
+
+\section{Scalability patterns}
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{|p{2cm}|X|X|l}
+\cline{1-3}
+\cellcolor[HTML]{EFEFEF}Pattern & \cellcolor[HTML]{EFEFEF}Advantages & \cellcolor[HTML]{EFEFEF}Disadvantages &  \\ \cline{1-3}
+CQRS & Clear separation of Command and Query responsibilities that allows either to be scaled independently. Asynchronous commands with delayable execution and direct storage querying & Added Complexity. Commands can not return updated values. Forces eventual consistency and deeper domain knowledge &  \\ \cline{1-3}
+Queue Centric Workflow & Immense loose coupling.  Removes concurrency issues.Asynchronous execution of time consuming commands. Clean separation of concerns. & Delayed execution time. Could have bottleneck effect if not properly adjusted for synchronous  scalability with workload &  \\ \cline{1-3}
+Command Pattern & Allows using commands passed as messages in QCW. Allows mechanism for implementing asynchronous execution of commands in CQRS & Creation of many specific command classes &  \\ \cline{1-3}
+\end{tabularx}
+\caption{Scalability Patterns}
+\label{tab:scalability_patterns}
+\end{table}
+
