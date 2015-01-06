@@ -5,8 +5,23 @@ This chapter provides a summary of the research done for this thesis as an resul
 
 \section{The 4+1 View of our Architecture}
 
+
 \subsection{Scenario View (Use Case View)}
-The scenario view is used to illustrate the the fundamental functional requirements\index{Functional Requirements} that are used by the other views. Figure \ref{fig:coreusecase} is used to illustrate the basic functional requirements of the system as a use case. It shows the interaction between the three main actors in our system. Firstly the advertiser is a customer or user that accesses our system through one of the tenant domains and wishes to use the system in order to book an advertisement. Secondly the manager is either an employee of XV or one of the respective tenants. The manager is responsible for receiving booking requests and checking ensuring their availability \index{Availability} before confirming them. This manual process is used as guard in order to protect advertisers from booking large campaigns using media that the publisher has already booked. This step will only be automated once all publishers have set up services that provide consistent and up to date media information. At current the media database is only refreshed every night and thus a large amount of stale data might exist in the system. Once a booking has been validated and confirmed, the advertiser uploads their motif (video, image, recording, banner etc) and this information is then persisted. After the motifs have been uploaded, publishers are responsible for physically displaying/playing the advertisement on their mediums during the campaign dates.
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}Scenario View} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:coreusecase}} & \multicolumn{1}{X|}{Figure \ref{fig:coreusecase} is used to illustrate the basic functional requirements of the system as a use case. It shows the interaction between the three main actors in our system.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:tenantusecase}} & \multicolumn{1}{X|}{In addition to the core "marketplace" related use cases for our system, an additional high level use case for provisioning new tenants is outlined by figure \ref{fig:tenantusecase}.} & \\
+\cline{1-2}
+\end{tabularx}
+\caption{My caption}
+\label{my-label}
+\end{table}
+
+
 
 
 \begin{figure}
@@ -16,7 +31,6 @@ The scenario view is used to illustrate the the fundamental functional requireme
 \label{fig:coreusecase}
 \end{figure}
 
-In addition to the core "marketplace" related use cases for our system, an additional high level use case for provisioning new tenants is outlined by figure \ref{fig:tenantusecase}.
 
 \begin{figure}
 \centering
@@ -27,9 +41,20 @@ In addition to the core "marketplace" related use cases for our system, an addit
 
 \section{Logical View (Object View)}
 
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{000000} Logical View}} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:marketclass}} & \multicolumn{1}{X|}{Figure \ref{fig:marketclass} shows the class diagram for our marketplace context. It shows the different classes that can be used in order to satisfy our functional requirements. It also shows the relationship between these classes. It is important to articulate the inclusion of two abstract classes nl. \textit{AzureSearchResource} and \textit{AzureDocumentResource}. These two classes are provided by the AzureDocumentDB and AzureSearch components and are required by all objects that need to be persisted by either technology.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:infraclass}} & \multicolumn{1}{X|}{Figure \ref{fig:infraclass} has been created in order to provide implementation level details of the patterns suggested. This class diagram can be combined with the component and package diagrams in the AD to provide enough information to implement the basics of each pattern.} &  \\ \cline{1-2}
+\cline{1-2}
+\end{tabularx}
+\caption{My caption}
+\label{my-label}
+\end{table}
+
 %%%%%%%%%%% CLASS DIAGRAMS%%%%%%%%%%%%%%%%
-\subsection{Marketplace Classes}
-Figure \ref{fig:marketclass} shows the class diagram for our marketplace context. It shows the different classes that can be used in order to satisfy our functional requirements. It also shows the relationship between these classes. It is important to articulate the inclusion of two abstract classes nl. \textit{AzureSearchResource} and \textit{AzureDocumentResource}. These two classes are provided by the AzureDocumentDB and AzureSearch components and are required by all objects that need to be persisted by either technology. 
 
 \begin{figure}
 \centering
@@ -38,8 +63,6 @@ Figure \ref{fig:marketclass} shows the class diagram for our marketplace context
 \label{fig:marketclass}
 \end{figure}
 
-\subsection{Infrastructural Classes}
-In order to provide implementation level details of the patterns suggested for our project, figure \ref{fig:infraclass} has been created. This class diagram can be combined with the component and package diagrams in the AD to provide enough information to implement the basics of each pattern. 
 
 \begin{figure}
 \centering
@@ -50,9 +73,23 @@ In order to provide implementation level details of the patterns suggested for o
 
 
 \section{Process View}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}Process View} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{\begin{tabular}[c]{@{}l@{}}Figure\ref{fig:commandissuesequencediagram}, \\ Figure \ref{fig:commandhandlesequencediagram}\end{tabular}} & \multicolumn{1}{l|}{The following diagram (\ref{fig:commandissuesequencediagram} \& \ref{fig:commandhandlesequencediagram}) outlines the activity flows for commands. This flow would be followed by any request that requires the modification of database data. It is important to note how this applies the command and QCW \index{Queue Centric Workflow} patterns and completely separates the front end from the queue handler.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:activitydiagram}} & \multicolumn{1}{l|}{The activity diagram in figure \ref{fig:activitydiagram} outlines the entire workflow of activities in our marketplace. It highlights the different functional requirements in terms of activities as well as decision points along the flow.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:activitytenantisolation}} & \multicolumn{1}{l|}{The Dual Input/Tenant Validation pattern has been suggested for addressing tenant data isolation. The flow for implementing this pattern is shown in figure \ref{fig:activitytenantisolation}.} &  \\ \cline{1-2}
+ &  &  \\ \cline{1-2}
+\cline{1-2}
+\end{tabularx}
+\caption{My caption}
+\label{my-label}
+\end{table}
+
 %%%%%%%% SEQUENCE DIAGRAMS%%%%%%%%%%%%%%%%
-\subsection{Command and Queue Centric Activity Diagrams}
-The following diagrams (\ref{fig:commandissuesequencediagram} \& \ref{fig:commandhandlesequencediagram}) outlines the activity flows for commands. This flow would be followed by any request that requires the modification of database data. It is important to note how this applies the command and QCW \index{Queue Centric Workflow} patterns and completely seperates the front end from the queue handler. Allowing us to essentially scale the two independently. 
 
 \begin{figure}
 \centering
@@ -71,17 +108,12 @@ The following diagrams (\ref{fig:commandissuesequencediagram} \& \ref{fig:comman
 
 %%%%%%%% ACTIVITY DIAGRAMS %%%%%%%%%%%%%%%
 \subsection{Marketplace Activity Flow}
-The activity diagram in figure \ref{fig:activitydiagram} outlines the entire workflow of activities in our marketplace. It highlights the different functional requirements in terms of activities as well as decision points along the flow.  
-\begin{figure}
+
 \centering
 \includegraphics[width=\textwidth]{ActivityDiagram}
 \caption{Marketplace Activity Diagram}
 \label{fig:activitydiagram}
 \end{figure}
-
-
-\subsection{Tenant Data Isolation Activity Flow}
-In order to address our security concern an Dual Input/Tenant Validation pattern has been suggested. The flow for implementing this pattern is shown in figure \ref{fig:activitytenantisolation}.
 
 \begin{figure}
 \centering
@@ -93,8 +125,23 @@ In order to address our security concern an Dual Input/Tenant Validation pattern
 
 
 \section {Development View (Implementation View)}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}Development View} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:componentdiagram}} & \multicolumn{1}{l|}{In order to exemplify the different exchangeable components of our system a component diagram has been created. The model shown in figure \ref{fig:componentdiagram} indicates a high level overview of the encapsulated classes and the interfaces used for connecting these components. This diagram provides a broad overview of the system used for implementation.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:packagediagram}} & \multicolumn{1}{l|}{The package diagram shown in figure \ref{fig:packagediagram} emphasises the high level separation of different elements shown in figure \ref{fig:elements} as they divided into different packages.} &  \\ \cline{1-2}
+ &  &  \\ \cline{1-2}
+\cline{1-2}
+\end{tabularx}
+\caption{My caption}
+\label{my-label}
+\end{table}
+
 %%%%%%%% COMPONENT DIAGRAMS %%%%%%%%%%%%%%
-In order to exemplify the different exchangeable components of our system a component diagram has been created. The model shown in figure \ref{fig:componentdiagram} indicates a high level overview of the encapsulated classes and the interfaces used for connecting these components. This diagram provides a broad overview of the system used for implementation. 
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{ComponentDiagram}
@@ -103,8 +150,7 @@ In order to exemplify the different exchangeable components of our system a comp
 \end{figure}
 
 %%%%%%%% PACKAGE DIAGRAMS %%%%%%%%%%%%%%%%
-\subsection{Design Elements Package Decomposition}
-The package diagram shown in figure \ref{fig:packagediagram} shows the high level separation of different elements shown in figure \ref{fig:elements} divided into different packages. 
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{PackageDiagram}
@@ -114,4 +160,39 @@ The package diagram shown in figure \ref{fig:packagediagram} shows the high leve
 
 
 \section{Physical View (Deployment View)}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}Physical View} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:deploymentdiagram}} & \multicolumn{1}{l|}{The deployment diagram depicted in figure \ref{fig:deploymentdiagram} gives the physical deployment of nodes within our multi-tenant system. It indicates the technologies, configurations and approaches chosen as a result of multi-tenancy for implementing our system.} &  \\ \cline{1-2}
+\cline{1-2}
+\end{tabularx}
+\caption{My caption}
+\label{my-label}
+\end{table}
+
 %%%%%%%% DEPLOYMENT DIAGRAMS %%%%%%%%%%%%%
+
+emphasises
+
+
+
+High level use case
+Extends for sub searcher
+Use case  naming
+
+Cardinalities of class diagrams
+Motif aggregation
+Cardinalities names : Campaign Contains motif
+Check Campaign bookings reference, list?
+Overlap of campaign mediaitem and mediumtype
+
+
+Command add actor with command issue workflow
+
+
+Command issue
+Serialize command
+
