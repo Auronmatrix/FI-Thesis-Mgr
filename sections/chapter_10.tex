@@ -3,9 +3,18 @@
 
 In order to measure the viability of the produced architecture description \index{ Architecture Description} artefact, a prototype artefact has been created. This artefact, codenamed XV Prototype (XVP) is used in order to gain valuable implementation insights into the development of an actual working multi-tenant \index{Multi-tenant} application. It also helps reflect on architectural decisions made and provides useful feedback for improvement of the architecture development for future production implementations.
 
-\section{Application Source Code}
+\begin{tcolorbox}[colback=blue!3,colframe=blue!40!black,title=Prototype Source]
+The source code for the prototype is accessible from \textbf{https://bitbucket.org/auronmatrix\_/xvp}
+\end{tcolorbox}
 
-The source code for our prototype has been hosted on BitBucket and is accessible from \textbf{https://bitbucket.org/auronmatrix\_/xvp}. Please note that the repository is private as the source code contains some sensitive and private information. \textbf{To obtain access to this repository please send your requests to 417457@mail.muni.cz}
+\begin{tcolorbox}[colback=blue!3,colframe=blue!40!black,title=Online Prototype]
+The live prototype can be accessed at \textbf{ao.fithesis.info} (default tenant) or \textbf{xv.fithesis.info} (tenant 1)
+\end{tcolorbox}
+
+\section{Application Source Code}
+The source code for the project has been hosted in a private repository on BitBucket.org. In order to obtain access to the repository, please send a request to 
+\textbf{417457@mail.muni.cz}.
+
 
 \section{Accessing the Prototype}
 For this project, the domain fithesis.info was registered and a CNAME (Alias) entry was added to the DNS Zone File to point all hosts (*) to our azure instance (xvp.azurewebsites.net). This allows us to dynamically add any tenants with their own custom domain name in the form
@@ -18,7 +27,7 @@ Two core tenants have been setup:
 \end{itemize}
 
 \section{Tenant Provisioning}
-When a new tenant is created without a redeployment with customized views the view engine will automatically access the shared default views and use them. Once custom views have however been created and a redeployment done the view engine will retrieve these custom views in priority order:
+When a new tenant is created without a redeployment or customized views, the view engine will automatically access the shared default views and use them. Once custom views have however been created and a redeployment done the view engine will retrieve these custom views in priority order:
 \begin{enumerate}
 \item tenant-<tenant-name>/controller
 \item tenant-<tenant-name>/shared
@@ -27,17 +36,24 @@ When a new tenant is created without a redeployment with customized views the vi
 \end{enumerate}
 
 \section{Limitations and Issues}
+
+\subsection{Multi-tenancy over Marketplace Functionality}
+As previously stated, the prototype has been created in order to measure the value of our architecture description. However, the technical details of implementing multi-tenancy is considered of higher priority to this thesis than that of implementing a fully functional marketplace. It is therefore that our prototype implements the multi-tenant components of our AD, but neglects the marketplace functionality. However, this has been deemed acceptable as the details of implementing these functional requirements have previously been conducted by the XV team and the multi-tenant requirements not. This is an extremely important limitation to the prototype. 
+
 \subsection{Azure Pricing}
-In contrast to implementing the prototype on Windows Azure Web Roles and using Azure Worker Role instances, it was decided to implement the prototype using Azure Websites and Azure WebJobs instead. In Appendix \ref{appendix} these technologies and their respective advantages disadvantages are discussed. This problem is considered low impact since it does not alter a lot of code. However, the physical performance of this choice is noticeable.
+In contrast to implementing the prototype on Windows Azure Web Roles and using Azure Worker Role instances, it was decided to implement the prototype using Azure Websites and Azure WebJobs instead. In Appendix \ref{appendix:azure} these technologies and their respective advantages and disadvantages are discussed. This problem is considered low impact since it does not alter a lot of code. However, the physical performance of this choice is noticeable.
 
 \subsection{Domain Driven Design}
-CQRS \index{Command Query Responsibility Segregation (CQRS)} is commonly implemented as pattern in conjunction with domain driven design \cite{Swanson}. This leads to a radical change in the way domain objects are created and the way they act. It also requires using of aggregates for accessing related entities. Fundamentally, completely implementing a domain driven design would be ideal since it would give us the many of the domain driven design benefits. As such, it is recommended for any further implementations of a system based on the prototype to use domain driven design as its principal design approach. However, in order to simplify the design, creation and implementation processes, the domain driven design has not been implemented in the prototype. Also since existing team members are not completely familiar with DDD and its specifications from a business perspective, this choice made sense. In order for the application to be easily migrated to a DDD approach the DDD application layers have been used in the prototype implementation already. This plus CQRS and the Command pattern \index{Command pattern} allows us to easily switch to a DDD approach by removing the generic command objects and replacing them with domain specific commands.
+CQRS \index{Command Query Responsibility Segregation (CQRS)} is commonly implemented as pattern in conjunction with domain driven design \cite{Homer2014}. This leads to a radical change in the way domain objects are created and the way they act. It also requires using aggregates for accessing related entities. Completely implementing a domain driven design would be ideal since it would give us many of the domain driven design benefits. As such, it is recommended for any further implementations of a system based on the prototype to use domain driven design as its principal design approach. However, in order to simplify the design, creation and implementation processes, the domain driven design has not been implemented in the prototype. Also since existing team members are not completely familiar with DDD and its specifications. From a business perspective, this choice made sense. In order for the application to be easily migrated to a DDD approach, the DDD application layers have been used in the prototype implementation already. This plus CQRS and the Command pattern \index{Command pattern} allows us to easily switch to a DDD approach by removing the generic command objects and replacing them with domain specific commands.
 
 \subsection{WebJob Polling Service}
-An Azure WebJob application is used to consume and execute commands placed in the Azure Storage Queue. The WebJob works very efficiently for processes that require long running asynchronous background processing. Since we implement CQRS and the majority of commands in the storage queue is related to data persistence operations (insert, update, delete) which although not time critical, is time sensitive. With the Azure WebJob setup, the WebJob only polls the storage queues once every 10 minutes by default. This value has been changed to under 10 seconds, however, a small delay in the time a command is queued and it is executed can still be observed. The easiest solution to this problem would require moving out of the Azure Websites as WebJob and into their own respective Azure Worker Role instance. This would significantly improve the performance of the queue handler as Worker Roles run as their own application instances with dedicated memory, where WebJobs run within an Azure Website with shared memory. This would also allow us better flexibility in the configuration of the application environment and would allow us to optimise the instance for processing messages from the storage queue.
+An Azure WebJob application is used to consume and execute commands placed in the Azure Storage Queue. The WebJob works very efficiently for processes that require long running asynchronous background processing. Since we implement CQRS and the majority of commands in the storage queue is related to data persistence operations (insert, update, delete) which although not time critical, is time sensitive. With the Azure WebJob setup, the WebJob only polls the storage queues once every 10 minutes by default. This value has been changed to under 10 seconds, however, a small delay in the time a command is queued and it is executed can still be observed. The easiest solution to this problem would require moving out of WebJobs and into their own respective Azure Worker Role instance. This would significantly improve the performance of the queue handler as Worker Roles run their own application instances with dedicated memory. Where WebJobs run within an Azure Website with shared memory. This would also allow us better flexibility in the configuration of the application environment and would allow us to optimise the instance for processing messages from the storage queue.
 
 \subsection{Azure Document Db Preview Release Limits}\index{Azure!Azure Document DB}
-At time of writing Azure Document DB has only been released for Public Preview. Specific limitations that severely affected the prototype development and method for implementing multi-tenancy \index{Multi-tenant} was its container limitations \cite{AzureLimits}. Each DocumentDB only allows the creation of 3 collections that act as containers for documents. In order to solve the container problem, database level separation (as opposed to container) level separation was implemented. However this, introduces severe limitations on cross tenant querying capabilities and should not be followed in the production implementation.
+At time of writing Azure Document DB had only been released for Public Preview. Specific limitations that severely affected the prototype development and method for implementing multi-tenancy \index{Multi-tenant} was its container limitations \cite{AzureLimits}. Each DocumentDB only allows the creation of 3 collections that act as containers for documents. In order to solve the container problem, database level separation (as opposed to container) level separation was implemented. However this, introduces severe limitations on cross tenant querying capabilities and should not be followed in the production implementation.
+
+\section{Continuous Development}
+As this thesis and the resulting prototype have been created in order to address specific business requirements. Continuous development of the prototype will be conducted in order to create a solid foundation for starting a fully functional, production system.
 
 \section{Conclusion}
-
+Development of the prototype has provided valuable feedback for this thesis and has already been incorporated into the previous chapters. This chapter briefly explained how to access the source code and online versions of the prototype as well as important limitations faced during the prototype development. 

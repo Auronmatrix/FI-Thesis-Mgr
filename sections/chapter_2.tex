@@ -6,7 +6,7 @@ This chapter aims to introduce the concepts and ideas surrounding multi-tenancy 
 
 Cloud computing is commonly defined as a form of computing where computing resources are shared in contrast to having local dedicated resources to run applications or services \cite{webopedia}. Walker \cite{GraceWalker} further defines cloud computing as a solution that delivers IT as a service by using computers to work together and applications to utilize these collective computing power as a single system.
  
-The creation of public clouds, which offer cloud solutions to the general public, has provided anyone with almost unlimited resources and scalability. Large numbers of companies are shifting to using public clouds instead of maintaining their own data centres. The large cost advantages resulting from using the public cloud is the primary factor fuelling this shift, allowing stronger competition between companies of all sizes. Although cloud computing is not a new technology, but simply a way that computing resources are delivered (much akin to historic mainframes). It is a major paradigm shift in the way information and services are provided \cite{GraceWalker}. All of this has created a need for radical redefinition of our current computer architectures, software, tools, persistence mechanism and design patterns \cite{GraceWalker}. Applications design should be continuously aware of the cloud computing layers including Infrastructure as a Service (IaaS), \index{Infrastructure as a Service (IaaS)} Platform as a Service (PaaS)\index{Platform as a Service (PaaS)} and Software as a Service (SaaS), \index{Software as a Service (SaaS)} and be designed to natively support deployment and management through them. Bill Wilder \cite{webopedia} defines applications as cloud-native \index{cloud-native} if they are architected to take advantage of proven engineering practices that utilize cloud platform services to cost efficiently and automatically allocate resources allowing horizontal scaling, handle hardware failures without downtime and minimize network latency, all automatically.
+The creation of public clouds, which offer cloud solutions to the general public, has provided anyone with almost unlimited resources and scalability. Large numbers of companies are shifting to using public clouds instead of maintaining their own data centres. The large cost advantages resulting from using the public cloud is the primary factor fuelling this shift, allowing stronger competition between companies of all sizes. Although cloud computing is not a new technology, but simply a way that computing resources are delivered (much akin to historic mainframes). It is a major paradigm shift in the way information and services are provided \cite{GraceWalker}. All of this has created a need for radical redefinition of our current computer architectures, software, tools, persistence mechanism and design patterns \cite{GraceWalker}. Applications design should be continuously aware of the cloud computing layers including Infrastructure as a Service (IaaS), \index{Infrastructure as a Service (IaaS)} Platform as a Service (PaaS)\index{Platform as a Service (PaaS)} and Software as a Service (SaaS), \index{Software as a Service (SaaS)} and be designed to natively support deployment and management through them. Bill Wilder \cite{webopedia} defines applications as cloud-native \index{Cloud-native} if they are architected to take advantage of proven engineering practices that utilize cloud platform services to cost efficiently and automatically allocate resources allowing horizontal scaling, handle hardware failures without downtime and minimize network latency, all automatically.
 
 
 \section{What is Multi-tenancy?}
@@ -44,14 +44,14 @@ A simple definition for SaaS as defined by Chong \cite{Chong2006} as software de
 
 \subsection{Maturity Level}
 
-A common benchmark for measuring the maturity level of a SaaS application is the SaaS Maturity Model (see figure \ref{figure:saas_maturity_model}).
+A common benchmark for measuring the maturity level of a SaaS application is the SaaS Maturity Model (see figure \ref{fig:saas_maturity_model}).
 
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{saas_maturity_model}
 \caption{SaaS Maturity Model}
-\label{saas_maturity_model}
+\label{fig:saas_maturity_model}
 \end{figure}
 \index{SaaS Maturity}
 
