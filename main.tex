@@ -23,7 +23,7 @@
 \usepackage{tcolorbox}
 \usetikzlibrary{backgrounds}
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
-\thesistitle{Developing a multi-tenant, media-marketplace architecture with Windows Azure and ASP.NET} % enter thesis title
+\thesistitle{Developing a multi-tenant, media-marketplace architecture with Microsoft Azure and ASP.NET} % enter thesis title
 \thesissubtitle{Masters thesis}
 \thesisstudent{Aubrey D. Oosthuizen} % name of the author
 \thesiswoman{false} % defines author’s gender
@@ -46,32 +46,34 @@
 \AdvisorName
 \end{ThesisDeclaration}
 \begin{ThesisThanks}
-I would like to thank Dr. Bruno Rossi for acting as my thesis adviser and continuously giving valuable feedback and criticism that guided the thesis into a presentable piece of work. Furthermore, I would like to thank Mr. D. Harrison for being my mentor during my internship at XV and providing me with copious amounts of guidance. Finally, I would like to thank Ms. M. Oosthuizen for being a truly supporting partner through even the toughest of times and keeping me working.
+I would like to thank Dr. Bruno Rossi for acting as my thesis adviser and continuously giving valuable feedback and criticism that guided this into a presentable piece of work. Furthermore, I would like to thank Mr. D. Harrison for mentoring me during my internship at XV and providing me with copious amounts of guidance. Finally, I would like to thank Ms. M. Oosthuizen for being a truly supportive partner that kept on pushing and challenging me. 
 \end{ThesisThanks}
 \begin{ThesisAbstract}
-Abstract comes here (write at end of thesis)
+The introduction of cloud computing has allowed applications to run on shared resources. As a result, the hosting world has become subject to economies of scale. In order to truly benefit from this shared resource model, many software providers are faced with the question of implementing multi-tenancy. This model contrasts with traditional software approaches, where each grouping of customers are hosted on their own customized application and database  instances. Multi-tenancy promotes sharing of resources all the way from a single application instance to the database. This allows applications to better fit the cloud computing paradigm. All the while, providing increased maintainability, scalability and reduce hosting costs. This thesis attempts to create an architecture description that addresses the design concerns related to the implementation of a multi-tenant, media marketplace that utilizes Microsoft Azure and ASP.NET. A case study is used for providing context and a prototype is developed in order to test the viability of the resulting architecture description. 
 \end{ThesisAbstract}
 \begin{ThesisKeyWords}
 Multi-tenancy, Cloud Computing, Software as a Service, SaaS, Cloud Native Application, SaaS Maturity, Architecture Description, Microsoft Azure, ASP.NET, MVC, Command Query Responsibility Segregation, Queue Centric Workflow Computing
 \end{ThesisKeyWords}
 \MainMatter
 \tableofcontents % prints table of contents
-%\input{sections/chapter_1}
-%\input{sections/chapter_2}
-%\input{sections/chapter_3}
-%\input{sections/chapter_4}
-%\input{sections/chapter_6}
-%\input{sections/chapter_7}
-%\input{sections/chapter_8}
-%\input{sections/chapter_9}
-%\input{sections/chapter_10}
+\listoffigures
+\listoftables
+\input{sections/chapter_1}
+\input{sections/chapter_2}
+\input{sections/chapter_3}
+\input{sections/chapter_4}
+\input{sections/chapter_6}
+\input{sections/chapter_7}
+\input{sections/chapter_8}
+\input{sections/chapter_9}
+\input{sections/chapter_10}
 \input{sections/chapter_11}
 \printbibliography{}
 \printindex
 \appendix
-%\input{sections/appendix_a}
-%\input{sections/appendix_1}
-%\input{sections/appendix_2}
-%\input{sections/appendix_3}
-%\input{sections/appendix_4}
+\input{sections/appendix_a}
+\input{sections/appendix_1}
+\input{sections/appendix_2}
+\input{sections/appendix_3}
+\input{sections/appendix_4}
 \end{document}

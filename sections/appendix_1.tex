@@ -1,6 +1,24 @@
 \chapter{Tables}
 \label{appendix:tables}
 
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{l X l}
+\cline{1-2}
+\multicolumn{1}{|l|}{\cellcolor[HTML]{EFEFEF}Isolation} & \multicolumn{1}{X|}{One tenants processing, customization, persistence or activities should not influence another tenant in any way. Each tenant is considered by themselves to be the sole user of the system} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{\cellcolor[HTML]{EFEFEF}Availability} & \multicolumn{1}{X|}{The application should be accessible by any tenant at any given time.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{\cellcolor[HTML]{EFEFEF}Scalability} & \multicolumn{1}{X|}{Each tenant expects the application to meet their growing demand. Irrespective of other tenants} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{\cellcolor[HTML]{EFEFEF}Costs} & \multicolumn{1}{X|}{Costs should be lower than running a dedicated hosted version of the system themselves} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{\cellcolor[HTML]{EFEFEF}Customizability} & \multicolumn{1}{X|}{Tenants will expect to customize the system with their own Corporate Identity, logos and specific filters, etc. Additionally, customers might expect to be able to create custom tables, columns, etc as required by their specific business case} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{\cellcolor[HTML]{EFEFEF}Regulatory Compliance} & \multicolumn{1}{X|}{Different tenants might require the system to comply to specific regulations, laws or standards} &  \\ \cline{1-2}
+ &  & 
+\end{tabularx}
+\caption{Tenant Requirements}
+\label{table:tenant-requirements}
+\end{table}
+
+
 \begin{sidewaystable}[h]
 \centering
 \begin{tabularx}{\textwidth}{X X X X}

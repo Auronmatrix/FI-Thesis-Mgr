@@ -1,9 +1,9 @@
-\chapter{Amalgamating Design Inputs, Patterns and Concerns}
-This chapter uses an modified Attribute-Driven Design approach to attempt to bring all the design inputs and discussions from the previous chapters together. It aims to provide  design patterns and approaches that address specific design concerns \index{Design Concern} that have been extracted from the functional requirements, \index{Functional Requirements} quality attributes and design constraints.\index{Design Constraint}
+\chapter{Amalgamating Inputs And The Resulting Architecture Description}
+This chapter uses a modified Attribute-Driven Design approach to attempt to bring all the design inputs and discussions from the previous chapters together. It aims to provide  design patterns and approaches that address specific design concerns \index{Design Concern} that have been extracted from the functional requirements, \index{Functional Requirements} quality attributes and design constraints.\index{Design Constraint} Finally, it draws all the research of this paper together and creates an architecture description as resulting artefact.
 
 \section{Adapted Attribute-Driven Design Approach}
  \label{sec:add} 
-In creating an architecture description,\index{Architecture Description} the architect is faced with a range of diverse approaches. Each one of these approaches offers a certain framework for creating the AD and sets certain context and constraints on the design used. One such comprehensive approach to AD design is Attribute-Driven Design (ADD). In its essence, ADD is an approach to defining an AD that uses the software's quality attribute requirements as baseline for the design process \cite{Wojcik2006}. This approach uses an iterative, recursive process to attempt to decompose a system into elements by applying architectural tactics and patterns \cite{Wojcik2006}. The ADD approach provides highly detailed ADs that should satisfy all of the system requirements and quality attributes. This thesis uses a simplified and broad-viewed approach based on ADD in the creation of its architecture description. It does not attempt to completely follow ADD, but instead uses the ADD recommended process as blueprint for creation of the AD.
+In creating an architecture description,\index{Architecture Description} the architect is faced with a range of diverse approaches. Each one of these approaches offers a certain framework for creating a AD and sets certain context and constraints on the design used. One such comprehensive approach to AD design is Attribute-Driven Design (ADD). In its essence, ADD is an approach to defining an AD that uses the software's quality attribute requirements as baseline for the design process \cite{Wojcik2006}. This approach uses an iterative, recursive process to attempt to decompose a system into elements by applying architectural tactics and patterns \cite{Wojcik2006}. The ADD approach provides highly detailed ADs that should satisfy all of the system requirements and quality attributes. This thesis uses a simplified and broad-viewed approach based on ADD in the creation of its architecture description. It does not attempt to completely follow ADD, but instead uses the ADD recommended process as blueprint for creation of the AD.
 
 \section{System Requirements and Constraints}
 \label{sec:reqandconstraints}
@@ -57,7 +57,7 @@ FR11 & The system shall plot available media on a map according to the media's g
 \begin{tabularx}{\linewidth}{|l|X|l}
 \cline{1-2}
 DC1 & The system shall be implemented using technologies that are either openly and freely available or provided by the BizSpark program &   \\
-DC2 & The system shall be hosted on Windows Azure using either Azure Websites or Azure Web roles combined with either Azure WebJobs or Azure Worker Roles &  \\
+DC2 & The system shall be hosted on Microsoft Azure using either Azure Websites or Azure Web roles combined with either Azure WebJobs or Azure Worker Roles &  \\
 DC3 & The system shall be implemented using C\# &    \\
 DC4 & The system  shall use the .NET 4.5 framework    \\
 DC5 & The system shall use ASP.NET \index{ASP.NET} MVC for its front-end &    \\
@@ -70,14 +70,14 @@ DC5 & The system shall use ASP.NET \index{ASP.NET} MVC for its front-end &    \\
 \index{Model View Controller (MVC)}
 
 \subsection{Quality Attribute Scenarios}
-In accordance to ADD, each Quality Attribute outlined in table \ref{tab:quality_attributes} should be expressed in a stimulus-response form similar to quality attribute scenarios. As such, each QAR has been explicitly broken down from table \ref{table:qar1}, page \pageref{table:qar1} to table \ref{table:qar7} on page \pageref{table:qar7}. These scenarios provide a good stimulus-response breakdown for our quality attributes and allows us to measure the effectiveness of our AD against them. These scenarios are also used in selection of patterns and creation of system elements.
+In accordance to ADD, each Quality Attribute outlined in table \ref{tab:quality_attributes} should be expressed in a stimulus-response form similar to quality attribute scenarios. As such, each QAR has been explicitly broken down from table \ref{table:qar1}, page \pageref{table:qar1} to table \ref{table:qar7} on page \pageref{table:qar7}. These scenarios provide a good stimulus-response breakdown for our quality attributes and allows us to measure the effectiveness of our AD against them. These scenarios are also used in the selection of patterns and creation of system elements.
 
 \section{System Elements Decomposition}
-After assessing the requirements inputs, quality attribute scenarios and use case further, a broad-overview breakdown of the system has been done into four major container elements. This breakdown is outlined in figure \ref{fig:elements}. Each element could be further defined as follow:
+After assessing requirements inputs, quality attribute scenarios and use case further, a broad-overview breakdown of the system has been done into four major container elements. This breakdown is outlined in figure \ref{fig:elements}. Each element could be further defined as follow:
 \begin{itemize}
-\item \textbf{Presentation}: This element is concerned with providing the front-end to our system using ASP.NET MVC and other web technologies. The presentation element should be modifiable by nature allowing it to be altered according to tenant needs and specifications. This element will also include all marketplace related functionality
+\item \textbf{Presentation}: This element is concerned with providing the front-end to our system using ASP.NET MVC and other web technologies. The presentation element should be modifiable by nature, allowing it to be altered according to tenant needs and specifications. This element will also include all marketplace related functionality
 \item \textbf{Application}: The application element provides background processing and functionality and should be tenant neutral. It is concerned with the back end functionality requirements
-\item \textbf{Persistence}: The persistence element is concerned with the storage, retrieval and modification of application data. This includes all service and repository functionality
+\item \textbf{Persistence}: The persistence element is concerned with storage, retrieval and modification of application data. This includes all service and repository functionality
 \item \textbf{Infrastructure}: The infrastructure element contains the components, models and other elements concerned with cross cutting concerns. This element forms part of and is used by all other elements
 \end{itemize}
 
@@ -92,10 +92,10 @@ After assessing the requirements inputs, quality attribute scenarios and use cas
 \section{Architectural Drivers}
 \index{Architectural Driver}
  \label{sec:arcdrivers}
-An analysis of the architectural drivers for each element was made following the techniques outlined by Wood \cite{Wood2007}. This analysis can be seen in appendix \ref{table:architecturaldrivers}. Each requirements is analysed in accordance to its importance and impact or difficulty of implementation. This creates a combination of priorities as outlined by the case study and qualitative interpretation of research conducted. These priorities are then used to select the highest importance, highest impact drivers to architect first. 
+An analysis of the architectural drivers for each element was made following the techniques outlined by Wood \cite{Wood2007}. This analysis can be seen in appendix \ref{table:architecturaldrivers}.  Each requirement is analysed in accordance to its importance and impact or difficulty of implementation. This creates a combination of priorities as outlined by the case study and qualitative interpretation of research conducted. These priorities are then used to select the highest importance, highest impact drivers to architect first. 
 
 \subsection{Candidate Architectural Drivers (CAD)}
-Using the architectural drivers and their priorities, all requirements that have a direct influence on the architecture (high and medium impact) have been mapped to each element as shown in figure \ref{fig:designconcernmapping}. This mapping not only allows us to identify the CADs but also indicated three shared requirements amongst all elements nl. QAR1, QAR2 and DC2. These three requirements in effect form three shared concerns that hold a high priority.
+Using the architectural drivers and their priorities, all requirements that have a direct influence on the architecture (high and medium impact) have been mapped to each element as shown in figure \ref{fig:designconcernmapping}. This mapping not only allows us to identify the CADs but also indicated three shared requirements amongst all elements namely QAR1, QAR2 and DC2. These three requirements in effect form three shared concerns that hold a high priority.
 
 
 \begin{figure}
@@ -107,14 +107,14 @@ Using the architectural drivers and their priorities, all requirements that have
 
 \section{Design Concerns}
 \label{sec:designconcerns}
-The mapping of candidate architectural drivers seen in figure \ref{fig:designconcernmapping} further allows us to separate requirements that have a direct impact on our architecture from those that do not. After filtering out these requirements, each CAD can be connected to a specific architectural concern as described in Chapter \ref{chapter:architecting} Architecting a Multi-tenant System. By doing this mapping, specific requirements are grouped together into specific concerns. Furthermore, these concerns indicate specific problems that needs to be addressed by our AD as well as the effectiveness of the solution. These requirements are also used as perspective in selecting appropriate architectural design patterns to use in the resolution of each concern. See table \ref{table:designconcerns} for the resulting mappings. 
+The mapping of candidate architectural drivers seen in figure \ref{fig:designconcernmapping} further allows us to separate requirements that have a direct impact on our architecture from those that do not. After filtering out these requirements, each CAD can be connected to a specific architectural concern as described in chapter \ref{chapter:architecting} (Architecting a Multi-tenant System). By doing this mapping, specific requirements are grouped together into specific concerns. Furthermore, these concerns indicate specific problems that needs to be addressed by our AD as well as the effectiveness of the solution. These requirements are also used as perspective in selecting appropriate architectural design patterns to use in the resolution of each concern. See table \ref{table:designconcerns} for the resulting mappings. 
 
 
 \begin{table}[h]
 \centering
 \begin{tabularx}{\linewidth}{lXl}
 \rowcolor[HTML]{EFEFEF} 
-\begin{tabular}[c]{@{}l@{}}Candidat\\ Architectural\\ Driver\end{tabular} & \begin{tabular}[c]{@{}l@{}}Design\\ Concern\end{tabular} & \begin{tabular}[c]{@{}l@{}}Related\\ Sections\end{tabular} \\
+\begin{tabular}[c]{@{}l@{}}Candidate\\ Architectural\\ Driver\end{tabular} & \begin{tabular}[c]{@{}l@{}}Design\\ Concern\end{tabular} & \begin{tabular}[c]{@{}l@{}}Related\\ Sections\end{tabular} \\
 QAR1 & Scalability & \ref{sec:scalability} \\
 QAR2 & Availability & \ref{sec:availability} \\
 QAR6 & Configuration \& Customization & \ref{sec:custandconf} \\
@@ -139,8 +139,8 @@ One important aspect to note from the concerns outlined in table \ref{table:desi
 \item \textbf{Logging and Debugging}: Elmah, Application Insights
 \end{itemize}
 
-\section{Design Concerns and Suggested Approaches}
-In order to address each one of the concerns outlined in table, \ref{table:designconcerns} different patterns have been evaluated. The term pattern used in this section refers to the definition by Alexander \cite{Alexander1977-ni}. As a result, the term patterns describes any of the following system architecture patterns, design patterns, cloud architecture patterns, workflow patterns and even specific sub-types of patterns of any of the above. In essence, the patterns chosen have been a result of the qualitative interpretation of research done for this paper, personal experience \& skills as well as recommendations from various online sources. In addition, the CQRS pattern has been examined specifically for its viability, as members of XV has expressed direct interest in implementing it. 
+\section{Suggested Approaches}
+In order to address each one of the concerns outlined in table \ref{table:designconcerns}, different patterns have been evaluated. The term pattern used in this section refers to the definition by Alexander \cite{Alexander1977-ni}. As a result, the term patterns describes any of the following system architecture patterns, design patterns, cloud architecture patterns, workflow patterns and even specific sub-types of patterns of any of the above. In essence, the patterns chosen have been a result of the qualitative interpretation of research done for this paper, personal experience \& skills as well as recommendations from various online sources. In addition, the CQRS pattern has been examined specifically for its viability, as members of XV has expressed direct interest in implementing it. 
 
 \subsection{Maintenance Concern}
 Implementation of multi-tenancy is the primary principle that is applied to simplify maintenance. Since the current XV platform requires modification of several application instances and uses a different code base for each tenant. Its deployment process is overly complex. It is therefore that this principle will help address this concern. However, implementing multi-tenancy introduces other maintenance issues. In our case, QAR3/4 (see table \ref{table:qar3}) requires that the system be maintainable in terms of adding new tenants. By using the suggested View Engine solution  discussed in section \ref{sec:viewengine}, we can remove many of the complexities of implementing custom views for tenants. Using a custom view engine will allow us to simply create new views that will overwrite global ones for each tenant. Although many pure multi-tenant solutions suggest using an approach where all customisation and configuration for tenants is done through configuration, our solution will not allow this. Tenants for our case require extreme degrees of front-end customisation and are provisioned on a monthly basis. This slow provisioning time allows us to use the custom view engine approach instead of using a pure customisation through configuration one. Additionally, the layering pattern has been chosen to help improve maintainability as well. Implementing the layering pattern allows us to decouple our system into different layers or tiers, each responsible for a specific grouping of functions. In contrast to the existing layering pattern implemented in XVA, a layering pattern that utilises the layers suggested by DDD will be used instead. The primary justification for using DDD layering is XV's attempt to migrate towards a more domain driven architecture. This decision is also coupled with implementing CQRS.
@@ -153,14 +153,14 @@ No patterns were selected that directly influence our availability concern. Sinc
 
 \subsection{Scalability Concern}
 
-In order to address the scalability requirements of our system, many different patterns have been reviewed. The patterns that have been ultimately selected include: load balancing, auto-scaling, command query responsibility segregation, command pattern and queue centric workflows. The advantages and disadvantages of CQRS, Command and QCW \index{Queue Centric Workflow} patterns have also been outlined in table \ref{tab:scalability_patterns}. These patterns primarily allow scalability by decoupling the system components and allowing easy, horizontal scaling through adding more instances. These instances could be any part of the system. Since a combination of CQRS, \index{Command Query Responsibility Segregation (CQRS)} QCW and the command pattern \index{Command pattern} is used, our presentation layer should be completely independent of executing any commands itself. This has the advantage of being able to scale up the web tier in cases of high query loads. In cases where there is a high command load more instances of the queue handler or application tier can be provisioned. Similarly the query database (if different query and command stores are used) could also be scaled horizontally. Using Azure technologies as required by [DC1/2] allows us to do this scaling on the fly and allows for scaling by metric (see appendix \ref{appendix:azure}). This means that scaling could be setup to be handled automatically and be elastic. The multi-instance\index{Multi-instance} approach is also what will primarily be used for addressing our availability concern. These specific patterns were selected due to their relevance as cloud architecture patterns. The CQRS pattern, although criticised as merely a trending pattern, has seen widespread acclaim by various system architects. This is especially true where implemented in combination with DDD. This pattern also directly addresses some of the issues with scaling for multi-tenancy through clean separation of query and command concerns. The QCW pattern is commonly used as supportive pattern to CQRS as it allows an even further degree of separation between the presentation, application and persistence elements. Implementation of this pattern allows independent scaling of, any of our application elements. The command pattern has been chosen to implement in combination with the other two as it allows delayed execution of commands and helps us to separate the front end from understanding any execution logic. This in effect allows us to move all business or domain logic to the application layer. It also allows us to queue commands to remove concurrency problems. Finally, using the auto-scaling pattern has also been considered. The auto-scaling pattern however has not been included in table \ref{tab:scalability_patterns} as it will be used, but not be implemented by our system. This is due to the fact that Windows Azure already implements different auto-scaling strategies that can be enabled purely through configuration.  
+In order to address the scalability requirements of our system, many different patterns have been reviewed. The patterns that have been ultimately selected include: load balancing, auto-scaling, command query responsibility segregation, command pattern and queue centric workflows. The advantages and disadvantages of CQRS, Command and QCW \index{Queue Centric Workflow} patterns have also been outlined in table \ref{tab:scalability_patterns}. These patterns primarily allow scalability by decoupling the system components and allowing easy, horizontal scaling through adding more instances. These instances could be any part of the system. Since a combination of CQRS, \index{Command Query Responsibility Segregation (CQRS)} QCW and the command pattern \index{Command pattern} is used, our presentation layer should be completely independent of executing any commands itself. This has the advantage of being able to scale up the web tier in cases of high query loads. In cases where there is a high command load more instances of the queue handler or application tier can be provisioned. Similarly, the query database (if different query and command stores are used) could also be scaled horizontally. Using Azure technologies as required by [DC1/2] allows us to do this scaling on the fly and allows for scaling by metric (see appendix \ref{appendix:azure}). This means that scaling could be setup to be handled automatically and be elastic. The multi-instance\index{Multi-instance} approach is also what will primarily be used for addressing our availability concern. These specific patterns were selected due to their relevance as cloud architecture patterns. The CQRS pattern, although criticised as merely a trending pattern, has seen widespread acclaim by various system architects. This is especially true where implemented in combination with DDD. This pattern also directly addresses some of the issues with scaling for multi-tenancy through clean separation of query and command concerns. The QCW pattern is commonly used as supportive pattern to CQRS as it allows an even further degree of separation between the presentation, application and persistence elements. Implementation of this pattern allows independent scaling of, any of our application elements. The command pattern has been chosen to implement in combination with the other two, as it allows delayed execution of commands and helps us to separate the front end from understanding any execution logic. This in effect allows us to move all business or domain logic to the application layer. It also allows us to queue commands to remove concurrency problems. Finally, using the auto-scaling pattern has also been considered. The auto-scaling pattern, however, has not been included in table \ref{tab:scalability_patterns} as it will be used, but not be implemented by our system. This is due to the fact that Microsoft Azure already implements different auto-scaling strategies that can be enabled purely through configuration.  
 
 
 \subsection{Configuration and Customisation Concern}
 The External Configuration Store Pattern is used to address the Configuration and Customisation Concern. This pattern simply states that configuration information should be store outside of the application files. Using this approach allows us to centralise configurations for all different instances of our application and its components. Although this pattern refers specifically to application configuration, we will use this pattern to apply to tenant configuration as well. The External Configuration Store pattern suggests the implementation of a management back-end that can be used to manipulate configuration that is separated from the core application.
 
 \subsection{Security Concern}
-Since multi-tenancy requires additional security considerations, especially in terms of isolation between tenants, selecting an appropriate approach is quite difficult. In order to address this concern, an modified version of input validation is suggested (see section \ref{sec:ditv}). This method uses multi-facet authentication. Firstly a user is authenticated normally with input validation checks. Once a user has been authenticated, all requests the user issues are checked to see if they originate from a valid tenant domain. Once it has been established that a request comes from a valid domain, the user is checked against the tenant that the domain belongs to. This ensures that only users that have been authorized for specific tenants can execute commands on that tenant. Only after this dual input/tenant validation has been done, requests processed. Using this approach also allows us to dynamically include the tenant that the requests originated from into each command or query. Thus, allowing us to further apply filtering or query adaption mechanisms. This tenant level filtering can be applied in the persistence element, effectively only allowing queries and commands to be executed for the tenant they originate from. 
+Since multi-tenancy requires additional security considerations, especially in terms of isolation between tenants, selecting an appropriate approach is quite difficult. In order to address this concern, a modified version of input validation is suggested (see section \ref{sec:ditv}). This method uses multi-facet authentication. Firstly, a user is authenticated normally with input validation checks. Once a user has been authenticated, all requests the user issues are checked to see if they originate from a valid tenant domain. Once it has been established that a request comes from a valid domain, the user is checked against the tenant that the domain belongs to. This ensures that only users that have been authorized for specific tenants can execute commands on that tenant. Only after this dual input/tenant validation has been done, requests processed. Using this approach also allows us to dynamically include the tenant that the requests originated from into each command or query. Thus, allowing us to further apply filtering or query adaption mechanisms. This tenant level filtering can be applied in the persistence element, effectively only allowing queries and commands to be executed for the tenant they originate from. 
 
 
 \subsection{Performance Concern}
@@ -173,7 +173,7 @@ The performance and scalability concerns in our system are highly interlinked. S
 \end{itemize}
 
 \subsection{Resulting Patterns, Approaches and Configurations}
-The results of the discussions of section \ref{sec:designconcerns} has been summarised in figure \ref{fig:concernpatterns}. It indicates the different patterns and approaches applied, as well as patterns that can be implemented via configuration in Windows Azure.
+The results of the discussions of section \ref{sec:designconcerns} has been summarised in figure \ref{fig:concernpatterns}. It indicates the different patterns and approaches applied, as well as patterns that can be implemented via configuration in Microsoft Azure. This figure has been used as source for creation of many of the architecture description models in section \ref{chap:ad}.
 
 
 \begin{figure}
@@ -183,5 +183,75 @@ The results of the discussions of section \ref{sec:designconcerns} has been summ
 \label{fig:concernpatterns}
 \end{figure}
 
+
+
+\section{Research Result - Architecture Description}
+\index{Architecture Description}
+\label{chap:ad}
+This section provides a summary of the research done for this thesis as an resulting artefact. This artefact takes the form of an architecture description in accordance to ISO42010 and is expressed in terms of the 4+1 view model. \textit{All the figures referenced in this chapter can be found in appendix \ref{appendix:ad}. They have been excluded in order to improve readability}.
+
+\subsection{The 4+1 View of our Architecture}
+
+\begin{table}[htp]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}Scenario View} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:coreusecase}} & \multicolumn{1}{X|}{Figure \ref{fig:coreusecase} is used to illustrate the functional requirements of the system. It shows the interaction between the three main actors in our system.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:tenantusecase}} & \multicolumn{1}{X|}{In addition to the core "marketplace" related use cases for our system, additional high level use case for provisioning new tenants is outlined by figure \ref{fig:tenantusecase}.} & \\
+\cline{1-2}
+\end{tabularx}
+\label{tab:scenarioview}
+\end{table}
+
+\begin{table}[htp]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{000000} Logical View}} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:marketclass}} & \multicolumn{1}{X|}{Figure \ref{fig:marketclass} shows the class diagram for our marketplace context. It shows the different classes that can be used in order to satisfy our functional requirements. It also shows the relationship between these classes. It is important to articulate the inclusion of two abstract classes nl. \textit{AzureSearchResource} and \textit{AzureDocumentResource}. These two classes are provided by the AzureDocumentDB and AzureSearch components and are required by all objects that need to be persisted by either technology.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:infraclass}} & \multicolumn{1}{X|}{Figure \ref{fig:infraclass} has been created in order to provide implementation level details of the patterns suggested. This class diagram can be combined with the component and package diagrams in the AD to provide enough information to implement the basics of each pattern.} &  \\ \cline{1-2}
+\cline{1-2}
+\end{tabularx}
+\label{tab:logicalview}
+\end{table}
+
+\begin{table}[htp]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}Physical View} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:deploymentdiagram}} & \multicolumn{1}{X|}{The deployment diagram depicted in figure \ref{fig:deploymentdiagram} gives the physical deployment of nodes within our multi-tenant system. It indicates the technologies, configurations and approaches chosen as a result of multi-tenancy for implementing our system. It is important to note that all network protocols have been omitted for simplicity.} &  \\ \cline{1-2}
+\cline{1-2}
+\end{tabularx}
+\label{tab:physicalview}
+\end{table}
+
+
+\begin{table}[htp]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{000000} Process View}} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{
+Figure \ref{fig:commandissuesequencediagram} Figure \ref{fig:commandhandlesequencediagram}} & \multicolumn{1}{X|}{Diagram (\ref{fig:commandissuesequencediagram} \& \ref{fig:commandhandlesequencediagram}) outlines the activity flows for commands. This flow would be followed by any request that requires the modification of data. It is important to note how this applies the command and QCW \index{Queue Centric Workflow} patterns and completely separates the front end from the queue handler.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:activitydiagram}} & \multicolumn{1}{X|}{The activity diagram in figure \ref{fig:activitydiagram} outlines the entire workflow of activities in our marketplace. It highlights the different functional requirements in terms of activities as well as decision points along the flow.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:activitytenantisolation}} & \multicolumn{1}{X|}{The Dual Input/Tenant Validation pattern has been suggested for addressing tenant data isolation. The flow for implementing this pattern is shown in figure \ref{fig:activitytenantisolation}.} &  \\ \cline{1-2}
+\end{tabularx}
+\label{tab:processview}
+\end{table}
+
+\begin{table}[htp]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\cline{1-2}
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}Development View} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:componentdiagram}} & \multicolumn{1}{X|}{In order to exemplify the different exchangeable components of our system a component diagram has been created. The model shown in figure \ref{fig:componentdiagram} indicates a high level overview of the encapsulated classes and the interfaces used for connecting these components. This diagram provides a broad overview of the system used for implementation.} &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Figure \ref{fig:packagediagram}} & \multicolumn{1}{X|}{The package diagram shown in figure \ref{fig:packagediagram} emphasises the high level separation of different elements shown in figure \ref{fig:elements} as they divided into different packages.} &  \\ \cline{1-2}
+\end{tabularx}
+\label{tab:developmentview}
+\end{table}
+
+
 \section{Conclusion}
-This chapter brought together chapters 2 through 6. It uses ADD as an guideline for refining our functional requirements, design constraints and quality attributes into specific design concerns. It then supports the selection of patterns and approaches that are applicable to addressing these design concerns and summarises them in figure \ref{fig:concernpatterns}. Which is used as baseline for the creation of many of the diagrams in the following chapter. 
+This chapter brought together chapters 2 through 6. It uses ADD as a guideline for refining our functional requirements, design constraints and quality attributes into specific design concerns. It then supports the selection of patterns and approaches that are applicable to addressing these design concerns and summarises them in figure \ref{fig:concernpatterns}, which is then used as baseline for the creation of many of the architecture description models. Finally, section \ref{chap:ad} maps our AD models in appendix \ref{appendix:ad} with our different 4+1 views and provides a brief explanation of each. 
