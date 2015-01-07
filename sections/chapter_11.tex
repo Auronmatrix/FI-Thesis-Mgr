@@ -1,19 +1,38 @@
 \chapter{Conclusion}
 
+This chapter reflects upon the results of this thesis and attempts to align it with the its original intention. It also outlines the boundaries of the thesis and provides suggestions for further research. 
 
-\section{Regarding the Research Questions}
+\section{Returning to the Research Questions}
+Through the course of this thesis an attempt was made to answer the questions outlined in chapter 1. A summary of these answers are outlined below. 
 
+\subsubsection{\textbf{Which cloud application patterns can be used for the implementation of a multi-tenant application on a variety of cloud platforms?}}
+
+Many useful patterns in the implementation of a multi-tenant system have been discussed. The most ones with the highest impact value included:
+\vfill
 \begin{enumerate}
-\item What broadview generic application architecture can be used to implement an multi-tenant applications for a variety of cloud platforms?
-\item What are the currently available technologies provided by Windows Azure to create architect and implement an multi-tenant solution?
-\item Which Azure Specific multi-tenant architecture can be implemented as prototype \index{Prototype} artefact to solve the major requirements for our case study?
+\item Queue Centric Workflow: This pattern creates a clean separation of front-end and back-end by processing requests through a queue. The queue acts as a buffer that helps isolate tenant performance during load spikes
+\item Command Pattern: The command pattern is a powerful encapsulation pattern used for separating invocation from execution. It allows us to capture tenant and entity data together for delayed execution
+\item Command Query Responsibility Segregation: This pattern allows us to effectively separate data modification (commands) from data retrieval (queries). This allows multi-tenant applications to asynchronously execute commands. When combined with the command and QCW patterns, it enables us to delay execution via a queue to a back end process
+\item Cache Aside: The cache aside pattern allows us to have a single shared cache instance that adds data on queries and deletes them on commands. This allows us to maintain cache data between different application instances
+\item External Configuration Store: By separating configuration from the application into a centralised repository multi-tenant maintenance can be dramatically simplified. It also allows us to store dynamic tenant specific data outside of the application
 \end{enumerate}
+
+
+\subsubsection{\textbf{What are the currently available technologies provided by Windows Azure to create, architect and implement a multi-tenant solution to fit our case study?}}
+
+After combining research conducted on Azure, qualitative interpretation results 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+\subsubsection{\textbf{Which Azure specific multi-tenant architecture can be implemented as prototype artefact to solve the major requirements for our case study?}}
+
 
 \section{Architecture in regards to the SaaS Maturity Level}
 \index{SaaS Maturity}
 
-\section{Research Assumptions, Limitations and Delimitation}
+\section{Degrees of multi-tenancy}
 
+\section{Research Assumptions, Limitations and Delimitation}
+All research essentially has inherent limitations and boundaries. This thesis' is outlined as follow:
 \subsection{Assumptions}
 \begin{itemize}
 \item Microsoft Azure is a publically available cloud platform
@@ -23,10 +42,11 @@
 \index{Multi-tenant}
 \subsection{Limitations}
 \begin{itemize}
-\item The results of this study is very technology dependent and therefore cannot be completely generalized for SaaS providers using any platform. It only serves as foundation for understanding how a multi-tenant system can be implemented in Azure and should be used for gaining context. In order to address this limitation, an high level general architecture has been extracted from the results
+\item The results of this study is very technology dependent and therefore cannot be completely generalised for SaaS providers using any platform. It only serves as foundation for understanding how a multi-tenant system can be implemented in Azure and should be used for gaining context. In order to address this limitation, an high level general architecture has been extracted from the results
 \item The prototype produced in this study is aimed only as acting as proof of concept for the architectural design discussed in this research paper and does not aim to be a complete implementation of our case study application. It should mimic some fundamental functionality of the case study application only to show suggested means of implementing the different concepts of the architecture. Furthermore, the prototype has a few critical limitations discussed in the final chapter concerning hosting due to the high costs of using the services that the actual case study application would require
 \item It is therefore important to note that the prototype created as part of this paper does not aim to provide specific implementation details or showcase specific design patterns or approaches. It also does not attempt to be a fully fledged system intended for future extension into an actual SaaS service but only exists as means of evaluating the architectural viability
 \end{itemize}
+\vfill
 
 \subsection{Delimitations}
 \begin{itemize}
@@ -38,3 +58,5 @@
 \section{Future Research}
 
 \section{To Conclude}
+
+\vfill
