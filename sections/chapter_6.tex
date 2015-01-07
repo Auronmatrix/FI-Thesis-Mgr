@@ -52,13 +52,14 @@ In single-tenant applications, the use of in memory caching is a quick and easy 
 \\
 \\
 Auto-scaling is the capability of dynamically allocating more or less resources as required by an application on demand and in accordance to some predefined Service Level Agreement (SLA) \cite{Homer2014}. Cloud -Native applications strive to be completely auto-scalable which allows large savings due to the over provisioning of resources. Auto-scalable applications can demand more resources be provisioned when loads are high and could allow resources to be removed when it detects that allocated resources are not being completely utilized. Although implementing a fully auto -scalable application for this thesis would be ideal, as it stands it has been deemed out of scope. However, since it is hard to change a horizontally scalable application to a completely auto-scalable one. Some architectural decisions were made with auto-scaling in mind, such as application statelessness and affinity.
-
+\\
+\\
 \textbf{Affinity and State}
 \\
 \\
 In order to improve the performance and scalability of our multi-tenant application, a stateless Web Tier is used. This means that the application requires no affinity, as no specific application instance will store session state data and therefore any instance can handle all application requests. This in effect allows us to scale horizontally without having to worry about maintaining affinity for our users. In cases where some session information has to be stored a client side mechanism is suggested instead. A common client side method is storing specific session data in a cookie using JavaScript Object Notation (JSON). In cases where storing sensitive information on the client side, encryption should be used. When user authentication states are stored in cookies it is also important to remember that attackers that capture the cookie will be able to impersonate that user and therefore protection mechanisms should be put in place, e.g. cross site scripting guards.
-
-
+\\
+\\
 \textbf{Multi-Instance Model}
 \\
 \\
@@ -69,7 +70,6 @@ One major drawback introduced by migrating to a multi-tenant approach is the cre
  
 One possible solution to help mitigate this risk is using a multi-tenant, multi-identical-instance model. That means that the exact same application and roles are replicated to different virtual machines or physical locations. A load balancer is then used to balance the load between these identical instances. In the event that something would happen to one of these instances, the load balancer would then easily be able to switch all requests to the other instance and therefore ensure the availability of the application. Azure already provides support for multi-instance models to be deployed and can be implemented using only configuration. Other multi-model supporting features commonly used include Availability sets, Fault Domains and VNets (see section \ref{sec:availability}).
 
-
 \subsection{Security}
 \label{sec:security} 
 
@@ -78,8 +78,8 @@ One possible solution to help mitigate this risk is using a multi-tenant, multi-
 \\
 \label{sec:ditv}
 User authentication in a multi-tenant system requires additional security measures. Firstly, users need to be authenticated in order to ensure that they are allowed to access the application. Once a user has been authenticated against the service, they need to be authenticated against the tenant they are claiming to belong to. Only once a tenant has been authenticated to both use the system and access a specific tenant's data is it allowed to be fully authenticated. Furthermore, user requests also need to be checked to ensure they are allowed to be executed against the requested tenant. This forms part of tenant data isolation.
-
-
+\\
+\\
 \textbf{Tenant Data Isolation}
 \\
 \\
@@ -102,8 +102,8 @@ It is important to note that with recent changes in Azure Virtual Network struct
 The degree to which individual customers are able to customize anything from layouts to schemas should be carefully considered during the application design stages in order to ensure that the architecture allows for sufficient customization from the start. Krebs states that the ability to handle different tenant specific configurations regarding User Interface (UI) as well as other functional, or non-functional behaviour can be considered as key enablers for multi-tenant applications \cite{Krebs2012}. Since tenants will require some changes or modifications such as extended features, implementation of these features should not influence other parts of the system.
  
 The customization required by our multi-tenant application proves to be one of the core elements driving many of the design choices. Each tenant requires complete customization of the front-end to fit their respective Corporate Identity (CI) as well as lower level extension to the system such as publisher filtering on database level. This essentially means specific publishers should only be shown to specific tenants, and some to all. Other important customization considerations include workflow processes used by different clients and how workflows would be implemented to include possible changes by the client.
-
-
+\\
+\\
 \textbf{Tenant Customization}
 \\
 \\
@@ -116,8 +116,8 @@ However, View Engines are also capable of defining search paths and retrieving s
 \subsection{Maintenance}
 \label{sec:maintainance}
 Bezemer \& Zaidman \cite{Bezemer:2010:MSA:1862372.1862393} state that using multi-tenancy could result in a maintenance dream since application deployment is significantly simplified. By using a single instance of the application and database, any changes simply need to be deployed once. However, this simplified maintenance is closely coupled with implementation quality. High quality multi-tenant application utilize a layered architecture that has multi-tenancy applied as a cross cutting concern \cite{Bezemer:2010:MSA:1862372.1862393}.
-
-
+\\
+\\
 \textbf{Provisioning}
 \\
 \\
@@ -136,8 +136,8 @@ In multi-tenant system design, many different approaches to designing a persiste
 
 
 Since our application requires a constantly varying schema, using a schema-less database has been chosen. This allows us to obtain the highest degree of flexibility. In order to allow the most effective persistence design to be implemented, a shared database, dedicated collection approach was taken. This approach is similar to the dedicated table/schema approach in the sense that a single database is used by all tenants, but each tenant has their own respective collection (groupings of documents, searchable indexes, entities, etc.). Furthermore since a single data storage type does not fit all our specific needs, such as auto-indexing of fields for searchable items and easy persistence of JSON objects as query-able documents, a polyglot persistence\index{Polyglot persistence} model is used.
-
-
+\\
+\\
 \textbf{Polyglot Persistence Model}
 \\
 \\

@@ -4,13 +4,9 @@ The advent of cloud computing \index{Cloud Computing} has changed the way we loo
 This study focuses on understanding what multi-tenancy is and why it is relevant to the design of cloud based solutions. A case study is used to provide a relevant context to research from which design considerations are drawn and finally a theoretical architecture implementing multi-tenancy for the specific case requirements is derived.
 
 
-\section{An Analogy for Multi-tenancy}
-
-A common analogy for multi-tenancy can be made by comparing multi-tenant software systems with an apartment block. Software tenants are considered a closed group of customers that are handled together and usually share a common view of the system \cite{Krebs2012} \cite{Wilder2012-so}. This means that like in the apartment block, tenants are a grouping of customers (people/families/businesses) using the system (living in an apartment). In such an apartment block, a tenant is an owner of their own respective apartment. Each tenant lives and operates within their apartment independently of other tenants. The tenant could also have other people living or working in his apartment while being completely isolated from the apartment block and other tenants as a whole. Although each tenant lives and acts as if they own the entirety of their apartment block, they are actually sharing resources with all the other tenants including electricity, heating and property space. In contrast classical software systems represent a house, where only a single-tenant lives and all resources are consumed and used by that tenant. Building a house for each family (grouping of customers or tenant) is extremely expensive and in many cases simply not feasible. This is especially true since everyone wants to pay the minimum amount of money for a place to live.
+\section{Problem}
  
- \section{Problem}
- 
-Similar to an apartment, customers and businesses want to keep costs for hosting or using software to a minimum. With applications that are designed and modified for a specific client or tenant and then hosted as an individual instance for that tenant, hosting costs increase linearly per tenant. In addition, all changes required by the tenant are implemented for that tenant's application instance, stacking up development and maintenance costs. If the same application needs to be modified for another tenant, the core application is modified and another instance of the modified application is hosted. This allows for the same application core to be hosted in many instances, each serving a specific tenant. 
+Customers and businesses want to keep costs for hosting or using software to a minimum. With applications that are designed and modified for a specific tenant and then hosted as an individual instance, hosting costs increase linearly per tenant. In addition, all changes required by the tenant are implemented for that tenant's application instance, stacking up development and maintenance costs. If the same application needs to be modified for another tenant, the core application is modified and another instance of the modified application is hosted. This allows for the same application core to be hosted in many instances, each serving a specific tenant. 
 
 Although this model allows for some particular benefits, it does not fit in the current "massive scalability" and "service" based cloud paradigm. Provisioning of new tenants is a manual process and scalability is mostly vertical (higher performance of computer hosting the instance) compared to cloud specialized horizontal scaling (more instances sharing application workload). Furthermore, vertical scaling is usually unidirectional, providing no elasticity. 
 
@@ -57,8 +53,8 @@ As most research revolving cloud technologies are still relatively new and conti
 
 The research problem is approached by firstly evaluating current and related cloud literature. Context to the research problem is then provided through means of the XV Application (XVA) use case. This use case is used as primary design input from which requirements, constraints and considerations are taken where after an in depth dissection of available technologies provided by Microsoft Azure is done. A broad overview of relevant design patterns is given and taken into account before creation of the initial architectural artefact or model. The model is then used to extract a general model for implementation of an multi-tenant application and the Azure specific model is then used to implement an simplistic prototype which is used as "proof of concept" and validity for the architectural model.
 
-
-
+\section{Research Contribution}
+This thesis contributes to the field of computer science. It attempts to provide deeper knowledge into multi-tenancy, its applications and the concerns faced with implementing it. Furthermore, it attempts to provide a solid architecture description artefact to be used by researchers or software as a service providers that wish to implement a cloud-native, multi-tenant application. Finally, the prototype can be used by future developers that wish to understand how certain design patterns can be implemented in conjunction with multi-tenancy. 
 
 
 \section{Research Outline}

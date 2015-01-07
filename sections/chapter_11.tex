@@ -4,10 +4,14 @@ This chapter reflects upon the results of this thesis and attempts to align it w
 
 
 \section{Returning to the Research Questions}
-Through the course of this thesis an attempt was made to answer the questions outlined in chapter 1. Reflections of these answers are outlined below: 
-\\
-\textbf{Which cloud application patterns can be used for the implementation of a multi-tenant application on a variety of cloud platforms?}
-\\
+Through the course of this thesis an attempt was made to answer the questions outlined in chapter 1. Reflections of these answers are outlined as follow:
+
+\begin{tcolorbox}[title=Research Question 1]
+Which cloud application patterns can be used for the implementation of a multi-tenant application on a variety of cloud platforms?
+\end{tcolorbox}
+
+
+
 Many useful patterns in the implementation of a multi-tenant system have been discussed in chapter \ref{chapter:patterns}. The ones with the highest impact value included:
 \vfill
 \begin{enumerate}
@@ -18,11 +22,12 @@ Many useful patterns in the implementation of a multi-tenant system have been di
 \item External Configuration Store: By separating configuration from the application into a centralised repository, multi-tenant application maintenance can be dramatically simplified
 \end{enumerate}
 
-\textbf{What are the currently available technologies or services provided by Microsoft Azure to create, architect and implement a multi-tenant solution that fits our case study? }
-\\
+\begin{tcolorbox}[title=Research Question 2]
+What are the currently available technologies or services provided by Microsoft Azure to create, architect and implement a multi-tenant solution that fits our case study?
+\end{tcolorbox}
+
 The research conducted on Microsoft Azure and multi-tenancy produced a multitude of answers to this question. Just as multi-tenancy can be implemented in variable degrees, so too can different technologies be use to construct a multi-tenant system. The results in table \ref{tab:technologiesselected} outlines each of the Azure technologies or services selected to address our case study.
 
-\vfill
 \begin{table}[htp]
 \centering
 \begin{tabularx}{\textwidth}{|p{1.9cm}|p{3cm}|X|}
@@ -44,10 +49,12 @@ Messaging      & Azure Storage Queues    & Queue based persistent messaging betw
 \caption{Selected Azure Technologies and Services}
 \label{tab:technologiesselected}
 \end{table}
-\vfill
 
-\textbf{Which Azure specific multi-tenant architecture can be implemented as prototype artefact to solve the major requirements for our case study?}
-\\
+\begin{tcolorbox}[title=Research Question 3]
+Which Azure specific multi-tenant architecture can be implemented as prototype artefact to solve the major requirements for our case study?
+\end{tcolorbox}
+
+
 The main contribution of this thesis is the architecture description created in order to address this question. This architecture description can be found chapter \ref{chap:ad} and all supporting models in appendix \ref{appendix:ad}.
 
 \section{Results in regards to the SaaS Maturity Level}
@@ -88,7 +95,6 @@ All research essentially has inherent limitations and boundaries. This thesis' i
 \item Technological delimitations are made in relation to the case study and includes the usage of Microsoft Azure, ASP.NET \index{ASP.NET} MVC and C\# for building the application. Therefore no alternative cloud platforms or technologies have been reviewed 
 \end{itemize}
 \index{Model View Controller (MVC)}
-\vfill
 
 
 \section{Conceptual Framework}
@@ -105,7 +111,6 @@ As this thesis attempted to create an architecture description, a conceptual fra
 \item Test the resulting architecture description through implementation of a prototype
 \end{enumerate}
 This framework is a result of combining design science and our adopted attribute-driven design approach. As such, it could prove valuable for future research that attempt to answer similar research questions. 
-\vfill
 
 \section{Future Research}
 This thesis has been in most part business orientated in nature, thus implying  restrictions on the methodologies, technologies and patterns used. It is therefore that a strong recommendation for future research includes attempting to provide a general architecture description for multi-tenant applications, that is not bound to Microsoft Azure. Furthermore, such research might consider re-evaluating the architecture description created in this research. More specifically, developing an architecture that lifts the limitations outlined above and are inherited by our case study. 
